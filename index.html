@@ -113,18 +113,6 @@ body.named #user-chip{display:block;}
 .lc-bg{font-family:var(--fc);font-size:.55rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mu);}
 .lc-bg.live{color:var(--red);}
 
-.poll-card{border:1px solid var(--gold);background:rgba(212,147,59,.06);padding:22px 24px;margin-bottom:24px;}
-.poll-card-lbl{font-family:var(--fc);font-size:.54rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
-.poll-card-lbl::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--gold);display:inline-block;animation:pollPulse 1.6s infinite;}
-@keyframes pollPulse{0%,100%{opacity:1}50%{opacity:.3}}
-.poll-card-q{font-family:var(--fc);font-size:1.05rem;font-weight:700;color:var(--w);margin-bottom:16px;line-height:1.35;}
-.poll-card-opts{display:flex;flex-direction:column;gap:8px;}
-.poll-opt-btn{border:1px solid var(--ln);background:var(--bgd);color:var(--w);font-family:var(--fc);font-size:.82rem;font-weight:600;padding:12px 16px;text-align:left;cursor:pointer;transition:all .15s;}
-.poll-opt-btn:hover{border-color:var(--gold);background:rgba(212,147,59,.08);}
-.poll-opt-btn.voted{border-color:var(--gold);background:rgba(212,147,59,.14);cursor:default;}
-.poll-card-thanks{font-family:var(--fc);font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-top:6px;}
-
-
 /* QUESTIONNAIRE (attendee) */
 #questionnaire{flex-direction:column;}
 .q-hdr{background:rgba(10,10,10,.97);border-bottom:1px solid var(--ln);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:100;}
@@ -149,7 +137,7 @@ body.named #user-chip{display:block;}
 .q-ta::placeholder{color:var(--mu);}
 
 /* QUESTIONNAIRE LOCKED STATE */
-#q-locked-view{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px;}
+#questionnaire.locked .q-body{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px;}
 .q-lock-icon{font-size:2.5rem;margin-bottom:20px;opacity:.3;}
 .q-lock-title{font-family:var(--fd);font-size:clamp(1.8rem,4vw,3rem);text-transform:uppercase;color:var(--w);margin-bottom:10px;}
 .q-lock-sub{font-family:var(--fp);font-style:italic;font-size:.95rem;color:rgba(241,237,228,.4);max-width:380px;line-height:1.55;}
@@ -181,35 +169,6 @@ body.named #user-chip{display:block;}
 .p1ov-ref{font-family:var(--fc);font-size:clamp(.7rem,1.2vw,1rem);font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--red);margin-bottom:18px;}
 .p1ov-text{font-family:var(--fp);font-style:italic;font-size:clamp(1.8rem,3.5vw,4rem);color:var(--w);line-height:1.3;max-width:1400px;}
 .p1ov-corner{position:absolute;bottom:28px;right:40px;font-family:var(--fc);font-size:.52rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.08);}
-
-/* LIVE Q&A OVERLAY — gold accent so it reads as a different kind of interrupt than the red scripture overlay */
-#qa-overlay{
-  position:absolute;inset:0;z-index:55;
-  display:none;
-  flex-direction:column;align-items:center;justify-content:center;text-align:center;
-  padding:7vh 8vw;
-  background:rgba(4,4,4,.97);
-}
-#qa-overlay.show{display:flex;}
-.qaov-mark{width:4px;height:50px;background:var(--gold);margin:0 auto 22px;}
-.qaov-kicker{font-family:var(--fc);font-size:clamp(.7rem,1.1vw,1rem);font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:22px;}
-.qaov-text{font-family:var(--fp);font-style:italic;font-size:clamp(1.9rem,3.6vw,4rem);color:var(--w);line-height:1.32;max-width:1300px;}
-.qaov-name{font-family:var(--fc);font-size:clamp(.62rem,.9vw,.8rem);font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mu);margin-top:24px;}
-#poll-overlay{
-  position:absolute;inset:0;z-index:55;
-  display:none;
-  flex-direction:column;align-items:center;justify-content:center;text-align:center;
-  padding:7vh 8vw;
-  background:rgba(4,4,4,.97);
-}
-#poll-overlay.show{display:flex;}
-.pollov-q{font-family:var(--fd);font-size:clamp(1.8rem,3.2vw,3.4rem);text-transform:uppercase;color:var(--w);line-height:1.05;margin-bottom:36px;max-width:1300px;}
-.pollov-bars{width:min(900px,80vw);display:flex;flex-direction:column;gap:16px;}
-.pollov-bar-row{text-align:left;}
-.pollov-bar-lbl{display:flex;justify-content:space-between;font-family:var(--fc);font-size:clamp(.85rem,1.3vw,1.15rem);font-weight:700;color:var(--w);margin-bottom:6px;text-transform:uppercase;}
-.pollov-bar-lbl span:last-child{color:var(--gold)}
-.pollov-bar-track{height:14px;background:rgba(255,255,255,.08);}
-.pollov-bar-fill{height:100%;background:var(--gold);transition:width .4s ease;}
 
 .slide{display:none;width:100%;height:100%;position:relative;opacity:0;transform:translateY(10px);transition:opacity .35s,transform .35s;}
 .slide.on{display:flex;flex-direction:column;justify-content:center;opacity:1;transform:none;animation:sIn .35s ease forwards;}
@@ -244,8 +203,8 @@ body.named #user-chip{display:block;}
 .sl-big-text{font-family:var(--fd);font-size:clamp(2.4rem,5.5vw,6rem);text-transform:uppercase;line-height:.92;color:var(--w);margin-bottom:20px;}
 .sl-big-text .acc{color:var(--red);}
 .sl-big-ref{font-family:var(--fp);font-style:italic;font-size:.9rem;color:rgba(241,237,228,.32);}
-.sl-sc{align-items:center;padding:80px;justify-content:center;text-align:center;}
-.sl-sc-mk{width:3px;height:54px;background:var(--red);margin:0 auto 22px;}
+.sl-sc{align-items:flex-start;padding:80px;justify-content:center;}
+.sl-sc-mk{width:3px;height:54px;background:var(--red);margin-bottom:22px;}
 .sl-sc-rf{font-family:var(--fc);font-size:.62rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:14px;}
 .sl-sc-tx{font-family:var(--fp);font-style:italic;font-size:clamp(1.2rem,2.4vw,2.2rem);color:var(--w);line-height:1.4;margin-bottom:18px;max-width:900px;}
 .sl-sc-tk{font-family:var(--fc);font-size:.74rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);max-width:680px;line-height:1.5;}
@@ -396,11 +355,6 @@ body.named #user-chip{display:block;}
 .ctrl-ab.red-btn:hover{background:var(--redd);}
 .ctrl-ab.danger{border-color:rgba(232,24,13,.25);color:rgba(232,24,13,.55);}
 .ctrl-ab.danger:hover{background:rgba(232,24,13,.07);color:var(--red);}
-.ctrl-ab.lesson-pill{width:100%;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:8px;}
-.ctrl-ab.lesson-active{background:var(--red);color:#fff;border-color:var(--red);cursor:default;}
-.ctrl-ab.lesson-locked{opacity:.4;cursor:not-allowed;}
-.ctrl-ab.lesson-locked:hover{color:var(--mu);border-color:var(--ln);}
-.ctrl-ab .lesson-tag{font-size:.52rem;opacity:.7;letter-spacing:.08em;}
 
 /* PROJECTOR MODES */
 body.projector-mode .ss-hdr,
@@ -472,12 +426,12 @@ body.scripture-mode #scripture-display{display:flex;}
    ========================================================= */
 :root{--slide-pad-x:7.5vw;--slide-pad-y:6.4vh;--safe-w:84vw;--red-bright:#ff2b22;}
 .sc-bg,.hub-hero-bg,.ss-stage-bg,.sl-cover-bg,.sp-bg{background-image:var(--bg-image)!important;background-size:cover;background-position:center!important;}
-.sc-bg{filter:brightness(.34) saturate(.65)!important;}.hub-hero-bg{filter:brightness(.22) saturate(.45)!important;}.ss-stage-bg{filter:brightness(.14) saturate(.25)!important;}.sl-cover-bg{filter:brightness(.39) saturate(.7)!important;} /* ss-stage-bg and sl-cover-bg bumped +15% per v18 brightness pass (.12→.14, .34→.39); these are fallback values, body.projector-mode overrides below are what actually shows on /projector */
+.sc-bg{filter:brightness(.34) saturate(.65)!important;}.hub-hero-bg{filter:brightness(.22) saturate(.45)!important;}.ss-stage-bg{filter:brightness(.12) saturate(.25)!important;}.sl-cover-bg{filter:brightness(.34) saturate(.7)!important;}
 .sc-inner{max-width:1280px;padding:72px 7vw;}
 .sc-ey{align-items:flex-start;gap:12px;line-height:1.05}.sc-ey::before{margin-top:.08em}.sc-sub{display:flex;align-items:center;gap:14px;margin-bottom:24px}.sc-sub::after{display:none}.sc-sub::before{content:'';display:block;width:72px;height:2px;background:var(--red);order:2}.sc-tag{margin-top:2px}.sc-qr-wrap{display:flex;gap:22px;align-items:flex-start;margin-top:32px;flex-wrap:wrap}.sc-qr-card{border:1px solid rgba(232,24,13,.35);background:rgba(5,5,5,.72);padding:13px;min-width:154px}.sc-qr-card img{width:128px;height:128px;display:block;image-rendering:pixelated}.sc-qr-label{font-family:var(--fc);font-size:.66rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-top:10px}.sc-qr-url{font-family:var(--fc);font-size:.58rem;letter-spacing:.08em;color:rgba(241,237,228,.62);margin-top:2px}.sc-pass{margin-top:18px;font-family:var(--fc);font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(241,237,228,.48)}.sc-pass span{color:var(--red)}
 .btn-mini{padding:12px 18px}
 .ss-stage{background:#050505}.ss-stage #ss-slides{position:relative;z-index:2;width:100%;height:100%;}.slide{will-change:opacity,transform}.slide.on{animation:slideReveal .48s cubic-bezier(.2,.75,.18,1) forwards}@keyframes slideReveal{from{opacity:0;transform:translateY(22px) scale(.992);filter:blur(4px)}to{opacity:1;transform:none;filter:blur(0)}}
-.sl-cover,.sl-sc,.sl-te,.sl-big,.sl-names,.sl-final{padding:var(--slide-pad-y) var(--slide-pad-x)!important}.sl-te{max-width:none}.sl-te-n{font-size:clamp(5rem,10vw,10rem);margin-bottom:-.22em;color:rgba(232,24,13,.14)}.sl-te-h{font-size:clamp(3.2rem,6.6vw,7.9rem);line-height:.86;max-width:min(1180px,var(--safe-w));margin-bottom:30px}.sl-pts{gap:14px;max-width:min(1100px,var(--safe-w))}.sl-pts li{font-size:clamp(1.35rem,2.05vw,2.35rem);line-height:1.25;padding-left:28px;color:rgba(241,237,228,.74)}.sl-pts li::before{width:8px;height:8px;top:.5em}.sl-big-text{font-size:clamp(4rem,7.8vw,9rem);line-height:.86;max-width:min(1400px,88vw)}.sl-big-sup{font-size:clamp(.68rem,1vw,1.1rem)}.sl-sc{align-items:center;text-align:center}.sl-sc>div{max-width:min(1200px,82vw)}.sl-sc-mk{height:70px}.sl-sc-rf{font-size:clamp(.8rem,1.1vw,1.15rem)}.sl-sc-tx{font-size:clamp(2rem,3.45vw,4.6rem);max-width:min(1300px,82vw);line-height:1.18}.sl-sc-tk{font-size:clamp(1rem,1.45vw,1.55rem);max-width:min(1040px,75vw)}.sl-names{align-items:center}.sl-nhd,.sl-nhl{width:min(1200px,84vw)}.sl-nhl{font-size:clamp(3.5rem,6.5vw,7.5rem);line-height:.86}.sl-ngrid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:16px!important;width:min(1200px,84vw)!important;max-width:none!important}.sl-nc{padding:22px 24px!important;min-height:120px}.sl-ncn{font-size:clamp(1.35rem,2vw,2rem)}.sl-nct{font-size:clamp(.95rem,1.2vw,1.25rem)}
+.sl-cover,.sl-sc,.sl-te,.sl-big,.sl-names,.sl-final{padding:var(--slide-pad-y) var(--slide-pad-x)!important}.sl-te{max-width:none}.sl-te-n{font-size:clamp(5rem,10vw,10rem);margin-bottom:-.22em;color:rgba(232,24,13,.14)}.sl-te-h{font-size:clamp(3.2rem,6.6vw,7.9rem);line-height:.86;max-width:min(1180px,var(--safe-w));margin-bottom:30px}.sl-pts{gap:14px;max-width:min(1100px,var(--safe-w))}.sl-pts li{font-size:clamp(1.35rem,2.05vw,2.35rem);line-height:1.25;padding-left:28px;color:rgba(241,237,228,.74)}.sl-pts li::before{width:8px;height:8px;top:.5em}.sl-big-text{font-size:clamp(4rem,7.8vw,9rem);line-height:.86;max-width:min(1400px,88vw)}.sl-big-sup{font-size:clamp(.68rem,1vw,1.1rem)}.sl-sc{align-items:center;text-align:left}.sl-sc>div{max-width:min(1200px,82vw)}.sl-sc-mk{height:70px}.sl-sc-rf{font-size:clamp(.8rem,1.1vw,1.15rem)}.sl-sc-tx{font-size:clamp(2rem,3.45vw,4.6rem);max-width:min(1300px,82vw);line-height:1.18}.sl-sc-tk{font-size:clamp(1rem,1.45vw,1.55rem);max-width:min(1040px,75vw)}.sl-names{align-items:center}.sl-nhd,.sl-nhl{width:min(1200px,84vw)}.sl-nhl{font-size:clamp(3.5rem,6.5vw,7.5rem);line-height:.86}.sl-ngrid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:16px!important;width:min(1200px,84vw)!important;max-width:none!important}.sl-nc{padding:22px 24px!important;min-height:120px}.sl-ncn{font-size:clamp(1.35rem,2vw,2rem)}.sl-nct{font-size:clamp(.95rem,1.2vw,1.25rem)}
 body.projector-mode .slide{font-size:1em}body.projector-mode .sl-te-h{font-size:clamp(4rem,7vw,8rem)}body.projector-mode .sl-pts li{font-size:clamp(1.45rem,2vw,2.25rem)}body.projector-mode .sl-big-text{font-size:clamp(5rem,8vw,9.5rem)}
 #p1-sc-overlay{align-items:center!important;justify-content:center!important;text-align:center!important;padding:7vh 8vw!important;background:rgba(4,4,4,.96)!important}.p1ov-mark{height:62px;margin:0 auto 26px}.p1ov-ref{font-size:clamp(1rem,1.25vw,1.35rem)}.p1ov-text{font-size:clamp(3rem,4.6vw,6.4rem)!important;line-height:1.16!important;max-width:1500px!important;margin:0 auto}.p1ov-corner{right:50%;transform:translateX(50%);bottom:34px}
 body.scripture-mode #scripture-display{background:#000}
@@ -501,7 +455,7 @@ body.projector-mode .sl-te{gap:0!important}.slide .sl-te-n + .sl-te-h{margin-top
 /* OBS lower thirds as actual lower third, not a slide clone */
 body.obs-mode{background:transparent!important}.obs-screen{pointer-events:none}.obs-tools{position:fixed;top:18px;right:18px;z-index:16001;display:flex;gap:8px;pointer-events:auto}.obs-tool{border:1px solid rgba(232,24,13,.55);background:rgba(0,0,0,.62);color:var(--red);font-family:var(--fc);font-size:.58rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:9px 11px;cursor:pointer}.obs-lower{left:3.2vw!important;right:auto!important;bottom:4.6vh!important;width:min(760px,56vw)!important;background:rgba(5,5,5,.78)!important;border-left:0!important;border-bottom:5px solid var(--red)!important;padding:18px 22px 20px!important;box-shadow:0 16px 40px rgba(0,0,0,.45)!important}.obs-series{font-family:var(--fc);font-size:.7rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:5px}.obs-ref{font-size:.86rem!important;margin-bottom:4px!important;color:rgba(241,237,228,.72)!important}.obs-text{font-family:var(--fc)!important;font-style:normal!important;font-weight:900!important;text-transform:uppercase;font-size:clamp(1.15rem,1.7vw,2.05rem)!important;line-height:1.02!important;letter-spacing:.025em}.obs-summary{font-family:var(--fb);font-size:.78rem;color:rgba(241,237,228,.68);margin-top:7px;line-height:1.25}.obs-screen.green{background:#00b140!important}.obs-screen.green .obs-lower{background:rgba(0,0,0,.92)!important}.obs-full{background:rgba(0,0,0,.86)!important}.obs-screen.green .obs-full{background:#00b140!important}.obs-screen.green .obs-full::before{content:'';position:absolute;inset:7vw;background:rgba(0,0,0,.9);z-index:-1}
 /* Confidence monitor */
-body.confidence-mode{background:#050505;color:var(--w);overflow:hidden}.confidence-screen{display:none;position:fixed;inset:0;z-index:14000;background:#060606;color:var(--w);font-family:var(--fb)}body.confidence-mode .confidence-screen{display:grid;grid-template-rows:auto auto 1fr auto}.conf-top{height:72px;border-bottom:1px solid var(--ln);display:flex;align-items:center;justify-content:space-between;padding:0 30px;background:#090909}.conf-qa-banner{max-height:0;overflow:hidden;padding:0 30px;background:rgba(212,147,59,.12);border-bottom:0 solid rgba(212,147,59,.4);font-family:var(--fc);font-size:.78rem;font-weight:700;letter-spacing:.04em;color:var(--gold);transition:max-height .25s,padding .25s;display:flex;align-items:center;gap:8px}.conf-qa-banner.on{max-height:54px;padding:14px 30px;border-bottom-width:1px}.conf-qa-banner span:first-child{text-transform:uppercase;letter-spacing:.14em;font-size:.62rem;color:rgba(241,237,228,.5)}.conf-qa-banner #conf-qa-text{color:var(--w);font-style:italic;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.conf-brand{font-family:var(--fd);font-size:2.1rem;letter-spacing:.04em}.conf-brand span{color:var(--red)}.conf-live{font-family:var(--fc);font-size:.72rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:rgba(241,237,228,.5)}.conf-live::before{content:'';display:inline-block;width:10px;height:10px;border-radius:50%;background:#44c45a;margin-right:9px}.conf-main{display:grid;grid-template-columns:1.35fr .8fr;gap:24px;padding:26px;min-height:0}.conf-card{border:1px solid var(--ln);background:#0d0d0d;min-height:0}.conf-current{padding:34px;display:flex;flex-direction:column;justify-content:center}.conf-kicker{font-family:var(--fc);font-size:.85rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:12px}.conf-title{font-family:var(--fd);font-size:clamp(4.4rem,7vw,8rem);line-height:.86;text-transform:uppercase}.conf-title span{color:var(--red)}.conf-ref{font-family:var(--fc);font-size:1rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(241,237,228,.48);margin-top:24px}.conf-side{display:grid;grid-template-rows:auto 1fr;gap:18px}.conf-timer{padding:28px;text-align:center}.conf-timer-label{font-family:var(--fc);font-size:.7rem;font-weight:900;letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:8px}.conf-timer-value{font-family:var(--fd);font-size:clamp(5rem,9vw,10rem);line-height:.8}.conf-next{padding:26px;display:flex;flex-direction:column;justify-content:center}.conf-next-label{font-family:var(--fc);font-size:.75rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:12px}.conf-next-title{font-family:var(--fd);font-size:clamp(2.6rem,4.6vw,5.4rem);line-height:.88;text-transform:uppercase;color:rgba(241,237,228,.9)}.conf-notes{border-top:1px solid var(--ln);background:#0a0a0a;padding:20px 30px;min-height:110px}.conf-notes-label{font-family:var(--fc);font-size:.75rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:8px}.conf-notes-text{font-family:var(--fb);font-size:clamp(1.2rem,1.8vw,2rem);line-height:1.25;color:rgba(241,237,228,.82)}
+body.confidence-mode{background:#050505;color:var(--w);overflow:hidden}.confidence-screen{display:none;position:fixed;inset:0;z-index:14000;background:#060606;color:var(--w);font-family:var(--fb)}body.confidence-mode .confidence-screen{display:grid;grid-template-rows:auto 1fr auto}.conf-top{height:72px;border-bottom:1px solid var(--ln);display:flex;align-items:center;justify-content:space-between;padding:0 30px;background:#090909}.conf-brand{font-family:var(--fd);font-size:2.1rem;letter-spacing:.04em}.conf-brand span{color:var(--red)}.conf-live{font-family:var(--fc);font-size:.72rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:rgba(241,237,228,.5)}.conf-live::before{content:'';display:inline-block;width:10px;height:10px;border-radius:50%;background:#44c45a;margin-right:9px}.conf-main{display:grid;grid-template-columns:1.35fr .8fr;gap:24px;padding:26px;min-height:0}.conf-card{border:1px solid var(--ln);background:#0d0d0d;min-height:0}.conf-current{padding:34px;display:flex;flex-direction:column;justify-content:center}.conf-kicker{font-family:var(--fc);font-size:.85rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:12px}.conf-title{font-family:var(--fd);font-size:clamp(4.4rem,7vw,8rem);line-height:.86;text-transform:uppercase}.conf-title span{color:var(--red)}.conf-ref{font-family:var(--fc);font-size:1rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(241,237,228,.48);margin-top:24px}.conf-side{display:grid;grid-template-rows:auto 1fr;gap:18px}.conf-timer{padding:28px;text-align:center}.conf-timer-label{font-family:var(--fc);font-size:.7rem;font-weight:900;letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:8px}.conf-timer-value{font-family:var(--fd);font-size:clamp(5rem,9vw,10rem);line-height:.8}.conf-next{padding:26px;display:flex;flex-direction:column;justify-content:center}.conf-next-label{font-family:var(--fc);font-size:.75rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:12px}.conf-next-title{font-family:var(--fd);font-size:clamp(2.6rem,4.6vw,5.4rem);line-height:.88;text-transform:uppercase;color:rgba(241,237,228,.9)}.conf-notes{border-top:1px solid var(--ln);background:#0a0a0a;padding:20px 30px;min-height:110px}.conf-notes-label{font-family:var(--fc);font-size:.75rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:8px}.conf-notes-text{font-family:var(--fb);font-size:clamp(1.2rem,1.8vw,2rem);line-height:1.25;color:rgba(241,237,228,.82)}
 @media(max-width:900px){.projector-wait-qr{grid-template-columns:1fr 1fr}.conf-main{grid-template-columns:1fr}.conf-side{grid-template-columns:1fr 1fr;grid-template-rows:auto}.conf-title{font-size:4rem}.conf-next-title{font-size:2.6rem}.obs-lower{width:86vw!important}}
 
 /* Mobile controller */
@@ -509,7 +463,7 @@ body.confidence-mode{background:#050505;color:var(--w);overflow:hidden}.confiden
 @media (orientation:landscape) and (max-height:600px){.mm-main{display:grid;grid-template-columns:1.1fr 1fr}.mm-status,.mm-actions{grid-column:1}.mm-verses{grid-row:1 / span 3;grid-column:2}.mm-bigbtn{min-height:96px}.mm-nav{grid-column:1}.mm-timer{font-size:2rem}}
 
 /* PROJECTOR 1: primary teaching slide. Tuned for 120 inch wide projection. */
-body.projector-mode .ss-stage-bg{filter:brightness(.23) saturate(.55)!important} /* +15% per v18 brightness pass, was .2 */
+body.projector-mode .ss-stage-bg{filter:brightness(.2) saturate(.55)!important}
 body.projector-mode .sl-te{align-items:flex-start!important;justify-content:center!important;padding:7vh 6.5vw!important;text-align:left!important}
 body.projector-mode .sl-te-n{font-family:var(--fd);font-size:clamp(7rem,10.5vw,13rem)!important;line-height:.8!important;color:var(--red)!important;opacity:1!important;margin:0 0 -1.25rem 0!important;letter-spacing:.005em!important}
 body.projector-mode .sl-te-h{font-family:var(--fd);font-size:clamp(5rem,8vw,10rem)!important;line-height:.86!important;max-width:1320px!important;margin-bottom:30px!important;color:var(--w)!important;letter-spacing:.005em!important}
@@ -518,7 +472,7 @@ body.projector-mode .sl-pts{max-width:1180px!important;gap:18px!important;margin
 body.projector-mode .sl-pts li{font-family:var(--fc);font-weight:800;font-size:clamp(1.7rem,2.2vw,2.65rem)!important;line-height:1.18!important;color:rgba(241,237,228,.88)!important;padding-left:34px!important}
 body.projector-mode .sl-pts li::before{width:10px!important;height:10px!important;top:.45em!important;background:var(--red)!important}
 body.projector-mode .sl-pts .hi, body.projector-mode .sl-pts li .hi{color:var(--w)!important;font-weight:900!important}
-body.projector-mode .sl-sc{align-items:center!important;justify-content:center!important;text-align:center!important;padding:8vh 9vw!important}
+body.projector-mode .sl-sc{align-items:center!important;justify-content:center!important;text-align:left!important;padding:8vh 9vw!important}
 body.projector-mode .sl-sc>div{width:min(1340px,84vw)!important;max-width:min(1340px,84vw)!important}
 body.projector-mode .sl-sc-tx{font-size:clamp(2.5rem,4.1vw,5.4rem)!important;line-height:1.18!important;max-width:1280px!important}
 body.projector-mode .sl-big-text{font-size:clamp(5.5rem,8.6vw,10.5rem)!important;line-height:.86!important;max-width:1500px!important}
@@ -526,15 +480,15 @@ body.projector-mode .sl-big-text{font-size:clamp(5.5rem,8.6vw,10.5rem)!important
 @media(max-width:768px){body:not(.projector-mode):not(.scripture-mode) .cmd-bar{height:auto;min-height:56px;flex-wrap:wrap;overflow:visible}.cmd-sec{padding:8px 10px}.cmd-sec[style]{min-width:auto!important}.cmd-stitle{max-width:150px}.ctrl-grid{display:none}.hub-hdr{height:auto;min-height:56px;padding:10px 16px;gap:10px;align-items:flex-start}.hub-nav{flex-wrap:wrap;justify-content:flex-end}.hub-hero{padding:38px 20px}.hub-title{font-size:clamp(3rem,18vw,5.5rem)}.hub-btns,.sc-btns{display:grid;grid-template-columns:1fr;width:100%}.lcard{align-items:flex-start;flex-direction:column}.sc-inner{padding:34px 20px;justify-content:flex-start}.sc-title .tt,.sc-title .tm{font-size:clamp(4rem,24vw,7rem)}.sc-series{display:grid;grid-template-columns:1fr;width:100%}.sc-qr-wrap{display:grid;grid-template-columns:1fr 1fr;gap:10px}.sc-qr-card{min-width:0}.sc-qr-card img{width:100%;height:auto}.mo-box{margin:18px}.ss-stage{min-height:0}.ss-hdr{height:auto;padding:10px 14px}.ss-nav{padding:10px}.slide{font-size:.72em}.sl-ngrid{grid-template-columns:1fr!important}.sl-nc{min-height:auto}}
 /* OBS overlay projectors */
 body.obs-mode{background:transparent!important;overflow:hidden}.obs-screen{display:none;position:fixed;inset:0;z-index:13000;background:transparent;color:var(--w);font-family:var(--fb)}body.obs-mode .obs-screen{display:block}.obs-lower{position:absolute;left:4vw;right:4vw;bottom:5vh;background:rgba(4,4,4,.82);border-left:5px solid var(--red);padding:22px 28px;box-shadow:0 12px 40px rgba(0,0,0,.4)}.obs-ref{font-family:var(--fc);font-size:1rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:7px}.obs-text{font-family:var(--fp);font-style:italic;font-size:clamp(1.5rem,2.6vw,3.3rem);line-height:1.18}.obs-full{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;background:rgba(0,0,0,.86);padding:8vw}.obs-full .obs-ref{font-size:clamp(1rem,1.4vw,1.6rem)}.obs-full .obs-text{font-size:clamp(3.2rem,5.2vw,7rem)}
-.ask-drawer{position:fixed;left:0;right:0;bottom:0;z-index:16000;background:#0d0d0d;border-top:2px solid var(--red);padding:22px;transform:translateY(105%);transition:transform .25s ease}.ask-drawer.open{transform:none}.ask-title{font-family:var(--fd);font-size:2rem;text-transform:uppercase}.ask-sub{font-family:var(--fc);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mu);margin-bottom:12px}.ask-ta{width:100%;min-height:110px;background:#050505;border:1px solid var(--ln);color:var(--w);font-family:var(--fb);font-size:1rem;padding:12px;resize:vertical;outline:none}.ask-row{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}.ask-anon{display:flex;align-items:center;gap:8px;margin-top:10px;font-family:var(--fc);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);cursor:pointer}.ask-anon input{width:15px;height:15px;accent-color:var(--red);cursor:pointer}.ask-ok{display:none;font-family:var(--fc);font-size:.7rem;color:var(--red);letter-spacing:.12em;text-transform:uppercase}.ask-ok.on{display:inline-flex;align-items:center}
+.ask-drawer{position:fixed;left:0;right:0;bottom:0;z-index:16000;background:#0d0d0d;border-top:2px solid var(--red);padding:22px;transform:translateY(105%);transition:transform .25s ease}.ask-drawer.open{transform:none}.ask-title{font-family:var(--fd);font-size:2rem;text-transform:uppercase}.ask-sub{font-family:var(--fc);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mu);margin-bottom:12px}.ask-ta{width:100%;min-height:110px;background:#050505;border:1px solid var(--ln);color:var(--w);font-family:var(--fb);font-size:1rem;padding:12px;resize:vertical;outline:none}.ask-row{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}.ask-ok{display:none;font-family:var(--fc);font-size:.7rem;color:var(--red);letter-spacing:.12em;text-transform:uppercase}.ask-ok.on{display:inline-flex;align-items:center}
 
 
 /* =========================================================
    V6 CLEANUP: output screens should stay clean while live
    ========================================================= */
-body.projector-mode .sl-sc{align-items:center!important;justify-content:center!important;text-align:center!important;padding:9vh 8vw!important}
+body.projector-mode .sl-sc{align-items:flex-start!important;justify-content:center!important;text-align:left!important;padding:9vh 8vw!important}
 body.projector-mode .sl-sc>div{width:auto!important;max-width:none!important}
-body.projector-mode .sl-sc-mk{width:4px!important;max-width:4px!important;height:72px!important;min-height:72px!important;background:var(--red)!important;margin:0 auto 24px auto!important;flex:0 0 auto!important;align-self:center!important}
+body.projector-mode .sl-sc-mk{width:4px!important;max-width:4px!important;height:72px!important;min-height:72px!important;background:var(--red)!important;margin:0 0 24px 0!important;flex:0 0 auto!important;align-self:flex-start!important}
 body.projector-mode .sl-sc-rf{font-size:clamp(.88rem,1.05vw,1.2rem)!important;letter-spacing:.24em!important;margin-bottom:18px!important}
 body.projector-mode .sl-sc-tx{font-size:clamp(2.25rem,3.4vw,4.25rem)!important;line-height:1.22!important;max-width:min(1280px,82vw)!important;margin-bottom:20px!important}
 body.projector-mode .sl-sc-tk{font-size:clamp(.92rem,1.15vw,1.25rem)!important;max-width:min(980px,72vw)!important;opacity:.72!important}
@@ -657,7 +611,7 @@ body.projector-mode .sl-cover{
 body.projector-mode .sl-cover-bg{
   background-size:cover!important;
   background-position:center 48%!important;
-  filter:brightness(.53) saturate(.72)!important; /* +15% per v18 brightness pass, was .46 */
+  filter:brightness(.46) saturate(.72)!important;
   opacity:.96!important;
 }
 body.projector-mode .sl-cover-ov{
@@ -752,11 +706,16 @@ body.projector-mode .p1-wait{
   padding-left:8.25vw!important;
 }
 body.projector-mode .p1-wait.hidden{display:none!important;}
-/* v11's ::before/::after background rules used to live here. They were dead —
-   the block further down this file (search "v18: was .72") has identical-or-higher
-   specificity and comes later in source order, so it always won. Removed rather
-   than left as a second, inert copy. If you're hunting for the standby background,
-   that's the one. */
+body.projector-mode .p1-wait::before{
+  background-position:center 48%!important;
+  filter:brightness(.42) saturate(.72)!important;
+  opacity:.96!important;
+}
+body.projector-mode .p1-wait::after{
+  background:
+    radial-gradient(circle at 72% 46%, rgba(0,0,0,.10) 0%, rgba(0,0,0,.22) 27%, rgba(0,0,0,.62) 63%, rgba(0,0,0,.90) 100%),
+    linear-gradient(90deg, rgba(3,3,3,.90) 0%, rgba(3,3,3,.58) 42%, rgba(3,3,3,.22) 70%, rgba(3,3,3,.45) 100%)!important;
+}
 body.projector-mode .pw-ti{
   display:block!important;
   font-family:var(--fd)!important;
@@ -844,14 +803,14 @@ body.scripture-mode #scripture-display .sp-wait::before{
   background-image:var(--bg-image)!important;
   background-size:cover!important;
   background-position:center 46%!important;
-  filter:brightness(.92) saturate(.88)!important; /* v18: was .72 — "way more visible" per Eli */
+  filter:brightness(.72) saturate(.82)!important;
   opacity:1!important;
 }
 body.projector-mode .p1-wait::after,
 body.scripture-mode #scripture-display .sp-wait::after{
   background:
-    radial-gradient(circle at 70% 50%, rgba(0,0,0,.06) 0%, rgba(0,0,0,.20) 42%, rgba(0,0,0,.52) 100%),
-    linear-gradient(90deg,rgba(0,0,0,.62) 0%,rgba(0,0,0,.32) 47%,rgba(0,0,0,.10) 72%,rgba(0,0,0,.26) 100%)!important; /* v18: lightened so the brighter image actually shows */
+    radial-gradient(circle at 70% 50%, rgba(0,0,0,.12) 0%, rgba(0,0,0,.34) 42%, rgba(0,0,0,.72) 100%),
+    linear-gradient(90deg,rgba(0,0,0,.80) 0%,rgba(0,0,0,.46) 47%,rgba(0,0,0,.20) 72%,rgba(0,0,0,.42) 100%)!important;
 }
 body.projector-mode .p1-wait{
   align-items:center!important;
@@ -1136,12 +1095,6 @@ body.obs-mode .obs-full.scripture .obs-summary{
     </div>
   </div>
   <div class="hub-body">
-    <div class="poll-card" id="poll-card" style="display:none">
-      <div class="poll-card-lbl">Live Poll</div>
-      <div class="poll-card-q" id="poll-card-q"></div>
-      <div class="poll-card-opts" id="poll-card-opts"></div>
-      <div class="poll-card-thanks" id="poll-card-thanks" style="display:none">Thanks — your response is in.</div>
-    </div>
     <div class="hub-lbl">Current Lesson</div>
     <div class="lcard" onclick="openSS()">
       <div><div class="lc-wk">Lesson 1 &middot; June 18, 2026</div><div class="lc-ti">The Price of Being Sent</div><div class="lc-rf">Matthew 10:1-10 &middot; 15 Slides</div></div>
@@ -1209,20 +1162,6 @@ body.obs-mode .obs-full.scripture .obs-summary{
       <div class="p1ov-ref" id="p1ov-ref">Matthew 10:1</div>
       <div class="p1ov-text" id="p1ov-text"></div>
       <div class="p1ov-corner"></div>
-    </div>
-    <!-- LIVE Q&A OVERLAY — featured question takeover -->
-    <div id="qa-overlay">
-      <div class="qaov-mark"></div>
-      <div class="qaov-kicker">Live Question</div>
-      <div class="qaov-text" id="qaov-text"></div>
-      <div class="qaov-name" id="qaov-name"></div>
-    </div>
-    <!-- LIVE POLL RESULTS OVERLAY -->
-    <div id="poll-overlay">
-      <div class="qaov-mark" style="background:var(--gold)"></div>
-      <div class="qaov-kicker" style="color:var(--gold)">Live Poll Results</div>
-      <div class="pollov-q" id="pollov-q"></div>
-      <div class="pollov-bars" id="pollov-bars"></div>
     </div>
   </div>
   <div class="ss-nav">
@@ -1398,10 +1337,6 @@ body.obs-mode .obs-full.scripture .obs-summary{
           </div>
         </div>
         <div class="ctrl-ag">
-          <div class="ctrl-ag-lbl">Lessons</div>
-          <div class="ctrl-ar" id="adm-lesson-picker" style="flex-direction:column;gap:4px"></div>
-        </div>
-        <div class="ctrl-ag">
           <div class="ctrl-ag-lbl">Session</div>
           <div class="ctrl-ar">
             <button class="ctrl-ab" onclick="openSS()">&#9654; Present</button>
@@ -1414,22 +1349,6 @@ body.obs-mode .obs-full.scripture .obs-summary{
             <button class="ctrl-ab" id="q-unlock-btn" onclick="adminUnlockQ()">Unlock Now</button>
           </div>
           <div style="font-family:var(--fc);font-size:.5rem;color:var(--mu);letter-spacing:.1em;text-transform:uppercase;margin-top:6px" id="q-status-lbl">Locked until final slide</div>
-        </div>
-        <div class="ctrl-ag" id="adm-poll-panel">
-          <div class="ctrl-ag-lbl">Live Poll</div>
-          <div id="adm-poll-build">
-            <input type="text" id="adm-poll-q" placeholder="Poll question" style="width:100%;background:var(--bgd);border:1px solid var(--ln);color:var(--w);font-family:var(--fc);font-size:.74rem;padding:8px 10px;margin-bottom:6px">
-            <input type="text" id="adm-poll-opts" placeholder="Options, comma separated (2-6)" style="width:100%;background:var(--bgd);border:1px solid var(--ln);color:var(--w);font-family:var(--fc);font-size:.74rem;padding:8px 10px;margin-bottom:8px">
-            <button class="ctrl-ab full" style="text-align:center;background:var(--gold);color:var(--bg);border-color:var(--gold)" onclick="adminOpenPoll()">Open Poll</button>
-          </div>
-          <div id="adm-poll-live" style="display:none">
-            <div style="font-family:var(--fc);font-size:.78rem;font-weight:700;color:var(--w);margin-bottom:8px" id="adm-poll-live-q"></div>
-            <div id="adm-poll-tally" style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px"></div>
-            <div class="ctrl-ar">
-              <button class="ctrl-ab" style="border-color:var(--gold);color:var(--gold)" onclick="adminShowPollResults()">Show Results</button>
-              <button class="ctrl-ab danger" onclick="adminClosePoll()">Close Poll</button>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -1456,7 +1375,6 @@ body.obs-mode .obs-full.scripture .obs-summary{
 <!-- PROJECTOR 5 — CONFIDENCE MONITOR -->
 <div id="confidence-screen" class="confidence-screen">
   <div class="conf-top"><div class="conf-brand">THE <span>MINISTRY</span></div><div class="conf-live" id="conf-status">Confidence Monitor</div></div>
-  <div class="conf-qa-banner" id="conf-qa-banner"><span>Live Question on screen:</span> <span id="conf-qa-text"></span></div>
   <div class="conf-main">
     <div class="conf-card conf-current"><div class="conf-kicker" id="conf-current-kicker">Current · Slide 1</div><div class="conf-title" id="conf-current-title">The Ministry</div><div class="conf-ref" id="conf-current-ref">Matthew 10 Series</div></div>
     <div class="conf-side">
@@ -1484,7 +1402,6 @@ body.obs-mode .obs-full.scripture .obs-summary{
   <div class="ask-title">Ask a Question</div>
   <div class="ask-sub">Send it to the presenter for live Q&A.</div>
   <textarea class="ask-ta" id="ask-ta" placeholder="Type your question here..."></textarea>
-  <label class="ask-anon"><input type="checkbox" id="ask-anon-cb"> Submit anonymously</label>
   <div class="ask-row"><span class="ask-ok" id="ask-ok">Sent</span><button class="btn btn-outline" onclick="closeAskDrawer()">Cancel</button><button class="btn btn-red" onclick="submitAskQuestion()">Submit</button></div>
 </div>
 
@@ -1565,7 +1482,7 @@ window.SB_KEY = ''; // paste your anon public key here
 //  (workbook questions) are part of this same lesson and live
 //  further down — search for "NOTES_L1" and "const QUESTIONS".
 // =========================================================
-let LESSON1_SLIDES = [
+const LESSON1_SLIDES = [
   {
     t: 'cover',
     eyebrow: 'The Ministry &middot; Matthew 10',
@@ -1709,7 +1626,7 @@ let LESSON1_SLIDES = [
   },
 ];
 
-let NOTES_L1 = {
+const NOTES_L1 = {
   0: 'Cover slide. Let it breathe. No rush.',
   1: 'Read slowly. Do not rush the text.',
   2: 'This is the diagnostic. Called → Empowered → Sent. The order is the whole point.',
@@ -1735,12 +1652,12 @@ let NOTES_L1 = {
 //  QUESTIONS below is the workbook/questionnaire content for
 //  this lesson — also edit per series.
 // =========================================================
-let SCRIPTURE_MAP = [{"ref_en": "Matthew 10:1-10", "text_en": "\"And when he had called unto him his twelve disciples, he gave them power against unclean spirits, to cast them out, and to heal all manner of sickness and all manner of disease.\" — Matthew 10:1", "ref_es": "Mateo 10:1", "text_es": "\"Entonces llamando a sus doce discípulos, les dio autoridad sobre los espíritus inmundos, para que los echasen fuera, y para sanar toda enfermedad y toda dolencia.\""}, {"ref_en": "Matthew 10:1", "text_en": "\"And when he had called unto him his twelve disciples, he gave them power against unclean spirits, to cast them out, and to heal all manner of sickness and all manner of disease.\"", "ref_es": "Mateo 10:1", "text_es": "\"Entonces llamando a sus doce discípulos, les dio autoridad sobre los espíritus inmundos, para que los echasen fuera, y para sanar toda enfermedad y toda dolencia.\""}, {"ref_en": "Matthew 10:1", "text_en": "\"And when he had called unto him his twelve disciples, he gave them power against unclean spirits, to cast them out, and to heal all manner of sickness and all manner of disease.\"", "ref_es": "Mateo 10:1", "text_es": "\"Entonces llamando a sus doce discípulos, les dio autoridad sobre los espíritus inmundos, para que los echasen fuera, y para sanar toda enfermedad y toda dolencia.\""}, {"ref_en": "Matthew 10:1", "text_en": "\"And when he had called unto him his twelve disciples, he gave them power against unclean spirits, to cast them out, and to heal all manner of sickness and all manner of disease.\"", "ref_es": "Mateo 10:1", "text_es": "\"Entonces llamando a sus doce discípulos, les dio autoridad sobre los espíritus inmundos, para que los echasen fuera, y para sanar toda enfermedad y toda dolencia.\""}, {"ref_en": "Matthew 10:1", "text_en": "\"And when he had called unto him his twelve disciples, he gave them power against unclean spirits, to cast them out, and to heal all manner of sickness and all manner of disease.\"", "ref_es": "Mateo 10:1", "text_es": "\"Entonces llamando a sus doce discípulos, les dio autoridad sobre los espíritus inmundos, para que los echasen fuera, y para sanar toda enfermedad y toda dolencia.\""}, {"ref_en": "Matthew 10:1", "text_en": "\"And when he had called unto him his twelve disciples, he gave them power against unclean spirits, to cast them out, and to heal all manner of sickness and all manner of disease.\"", "ref_es": "Mateo 10:1", "text_es": "\"Entonces llamando a sus doce discípulos, les dio autoridad sobre los espíritus inmundos, para que los echasen fuera, y para sanar toda enfermedad y toda dolencia.\""}, {"ref_en": "Matthew 10:1", "text_en": "\"And when he had called unto him his twelve disciples, he gave them power against unclean spirits, to cast them out, and to heal all manner of sickness and all manner of disease.\"", "ref_es": "Mateo 10:1", "text_es": "\"Entonces llamando a sus doce discípulos, les dio autoridad sobre los espíritus inmundos, para que los echasen fuera, y para sanar toda enfermedad y toda dolencia.\""}, {"ref_en": "Matthew 10:1-2", "text_en": "\"And when he had called unto him his twelve disciples, he gave them power against unclean spirits… Now the names of the twelve apostles are these; The first, Simon, who is called Peter, and Andrew his brother; James the son of Zebedee, and John his brother.\"", "ref_es": "Mateo 10:1-2", "text_es": "\"Entonces llamando a sus doce discípulos, les dio autoridad… Los nombres de los doce apóstoles son estos: el primero, Simón, llamado Pedro, y Andrés su hermano; Jacobo hijo de Zebedeo, y Juan su hermano.\""}, {"ref_en": "Matthew 10:1-2", "text_en": "\"And when he had called unto him his twelve disciples, he gave them power against unclean spirits… Now the names of the twelve apostles are these; The first, Simon, who is called Peter, and Andrew his brother; James the son of Zebedee, and John his brother.\"", "ref_es": "Mateo 10:1-2", "text_es": "\"Entonces llamando a sus doce discípulos, les dio autoridad… Los nombres de los doce apóstoles son estos: el primero, Simón, llamado Pedro, y Andrés su hermano; Jacobo hijo de Zebedeo, y Juan su hermano.\""}, {"ref_en": "Matthew 10:1", "text_en": "\"And when he had called unto him his twelve disciples, he gave them power against unclean spirits, to cast them out, and to heal all manner of sickness and all manner of disease.\"", "ref_es": "Mateo 10:1", "text_es": "\"Entonces llamando a sus doce discípulos, les dio autoridad sobre los espíritus inmundos, para que los echasen fuera, y para sanar toda enfermedad y toda dolencia.\""}, {"ref_en": "Matthew 10:2-4", "text_en": "\"Now the names of the twelve apostles are these; The first, Simon, who is called Peter, and Andrew his brother; James the son of Zebedee, and John his brother; Philip, and Bartholomew; Thomas, and Matthew the publican; James the son of Alphaeus, and Lebbaeus, whose surname was Thaddaeus; Simon the Canaanite, and Judas Iscariot, who also betrayed him.\"", "ref_es": "Mateo 10:2-4", "text_es": "\"Los nombres de los doce apóstoles son estos: el primero, Simón, llamado Pedro, y Andrés su hermano; Jacobo hijo de Zebedeo, y Juan su hermano; Felipe, Bartolomé, Tomás, Mateo el publicano, Jacobo hijo de Alfeo, Lebeo, por sobrenombre Tadeo, Simón el cananista, y Judas Iscariote, el que también le entregó.\""}, {"ref_en": "Matthew 10:4", "text_en": "\"Simon the Canaanite, and Judas Iscariot, who also betrayed him.\"", "ref_es": "Mateo 10:4", "text_es": "\"Simón el cananista, y Judas Iscariote, el que también le entregó.\""}, {"ref_en": "Matthew 10:5-6", "text_en": "\"These twelve Jesus sent forth, and commanded them, saying, Go not into the way of the Gentiles, and into any city of the Samaritans enter ye not: But go rather to the lost sheep of the house of Israel.\"", "ref_es": "Mateo 10:5-6", "text_es": "\"A estos doce envió Jesús, y les dio instrucciones, diciendo: Por camino de gentiles no vayáis, y en ciudad de samaritanos no entréis, sino id antes a las ovejas perdidas de la casa de Israel.\""}, {"ref_en": "Matthew 10:7-10", "text_en": "\"And as ye go, preach, saying, The kingdom of heaven is at hand. Heal the sick, cleanse the lepers, raise the dead, cast out devils: freely ye have received, freely give. Provide neither gold, nor silver, nor brass in your purses, Nor scrip for your journey… for the workman is worthy of his meat.\"", "ref_es": "Mateo 10:7-10", "text_es": "\"Y yendo, predicad, diciendo: El reino de los cielos se ha acercado. Sanad enfermos, limpiad leprosos, resucitad muertos, echad fuera demonios; de gracia recibisteis, dad de gracia. No os proveáis de oro, ni plata… porque el obrero es digno de su alimento.\""}, {"ref_en": "Matthew 10:1", "text_en": "\"And when he had called unto him his twelve disciples, he gave them power against unclean spirits, to cast them out, and to heal all manner of sickness and all manner of disease.\"", "ref_es": "Mateo 10:1", "text_es": "\"Entonces llamando a sus doce discípulos, les dio autoridad sobre los espíritus inmundos, para que los echasen fuera, y para sanar toda enfermedad y toda dolencia.\""}];
+const SCRIPTURE_MAP = [{"ref_en": "Matthew 10:1-10", "text_en": "\"And when he had called unto him his twelve disciples, he gave them power against unclean spirits, to cast them out, and to heal all manner of sickness and all manner of disease.\" — Matthew 10:1", "ref_es": "Mateo 10:1", "text_es": "\"Entonces llamando a sus doce discípulos, les dio autoridad sobre los espíritus inmundos, para que los echasen fuera, y para sanar toda enfermedad y toda dolencia.\""}, {"ref_en": "Matthew 10:1", "text_en": "\"And when he had called unto him his twelve disciples, he gave them power against unclean spirits, to cast them out, and to heal all manner of sickness and all manner of disease.\"", "ref_es": "Mateo 10:1", "text_es": "\"Entonces llamando a sus doce discípulos, les dio autoridad sobre los espíritus inmundos, para que los echasen fuera, y para sanar toda enfermedad y toda dolencia.\""}, {"ref_en": "Matthew 10:1", "text_en": "\"And when he had called unto him his twelve disciples, he gave them power against unclean spirits, to cast them out, and to heal all manner of sickness and all manner of disease.\"", "ref_es": "Mateo 10:1", "text_es": "\"Entonces llamando a sus doce discípulos, les dio autoridad sobre los espíritus inmundos, para que los echasen fuera, y para sanar toda enfermedad y toda dolencia.\""}, {"ref_en": "Matthew 10:1", "text_en": "\"And when he had called unto him his twelve disciples, he gave them power against unclean spirits, to cast them out, and to heal all manner of sickness and all manner of disease.\"", "ref_es": "Mateo 10:1", "text_es": "\"Entonces llamando a sus doce discípulos, les dio autoridad sobre los espíritus inmundos, para que los echasen fuera, y para sanar toda enfermedad y toda dolencia.\""}, {"ref_en": "Matthew 10:1", "text_en": "\"And when he had called unto him his twelve disciples, he gave them power against unclean spirits, to cast them out, and to heal all manner of sickness and all manner of disease.\"", "ref_es": "Mateo 10:1", "text_es": "\"Entonces llamando a sus doce discípulos, les dio autoridad sobre los espíritus inmundos, para que los echasen fuera, y para sanar toda enfermedad y toda dolencia.\""}, {"ref_en": "Matthew 10:1", "text_en": "\"And when he had called unto him his twelve disciples, he gave them power against unclean spirits, to cast them out, and to heal all manner of sickness and all manner of disease.\"", "ref_es": "Mateo 10:1", "text_es": "\"Entonces llamando a sus doce discípulos, les dio autoridad sobre los espíritus inmundos, para que los echasen fuera, y para sanar toda enfermedad y toda dolencia.\""}, {"ref_en": "Matthew 10:1", "text_en": "\"And when he had called unto him his twelve disciples, he gave them power against unclean spirits, to cast them out, and to heal all manner of sickness and all manner of disease.\"", "ref_es": "Mateo 10:1", "text_es": "\"Entonces llamando a sus doce discípulos, les dio autoridad sobre los espíritus inmundos, para que los echasen fuera, y para sanar toda enfermedad y toda dolencia.\""}, {"ref_en": "Matthew 10:1-2", "text_en": "\"And when he had called unto him his twelve disciples, he gave them power against unclean spirits… Now the names of the twelve apostles are these; The first, Simon, who is called Peter, and Andrew his brother; James the son of Zebedee, and John his brother.\"", "ref_es": "Mateo 10:1-2", "text_es": "\"Entonces llamando a sus doce discípulos, les dio autoridad… Los nombres de los doce apóstoles son estos: el primero, Simón, llamado Pedro, y Andrés su hermano; Jacobo hijo de Zebedeo, y Juan su hermano.\""}, {"ref_en": "Matthew 10:1-2", "text_en": "\"And when he had called unto him his twelve disciples, he gave them power against unclean spirits… Now the names of the twelve apostles are these; The first, Simon, who is called Peter, and Andrew his brother; James the son of Zebedee, and John his brother.\"", "ref_es": "Mateo 10:1-2", "text_es": "\"Entonces llamando a sus doce discípulos, les dio autoridad… Los nombres de los doce apóstoles son estos: el primero, Simón, llamado Pedro, y Andrés su hermano; Jacobo hijo de Zebedeo, y Juan su hermano.\""}, {"ref_en": "Matthew 10:1", "text_en": "\"And when he had called unto him his twelve disciples, he gave them power against unclean spirits, to cast them out, and to heal all manner of sickness and all manner of disease.\"", "ref_es": "Mateo 10:1", "text_es": "\"Entonces llamando a sus doce discípulos, les dio autoridad sobre los espíritus inmundos, para que los echasen fuera, y para sanar toda enfermedad y toda dolencia.\""}, {"ref_en": "Matthew 10:2-4", "text_en": "\"Now the names of the twelve apostles are these; The first, Simon, who is called Peter, and Andrew his brother; James the son of Zebedee, and John his brother; Philip, and Bartholomew; Thomas, and Matthew the publican; James the son of Alphaeus, and Lebbaeus, whose surname was Thaddaeus; Simon the Canaanite, and Judas Iscariot, who also betrayed him.\"", "ref_es": "Mateo 10:2-4", "text_es": "\"Los nombres de los doce apóstoles son estos: el primero, Simón, llamado Pedro, y Andrés su hermano; Jacobo hijo de Zebedeo, y Juan su hermano; Felipe, Bartolomé, Tomás, Mateo el publicano, Jacobo hijo de Alfeo, Lebeo, por sobrenombre Tadeo, Simón el cananista, y Judas Iscariote, el que también le entregó.\""}, {"ref_en": "Matthew 10:4", "text_en": "\"Simon the Canaanite, and Judas Iscariot, who also betrayed him.\"", "ref_es": "Mateo 10:4", "text_es": "\"Simón el cananista, y Judas Iscariote, el que también le entregó.\""}, {"ref_en": "Matthew 10:5-6", "text_en": "\"These twelve Jesus sent forth, and commanded them, saying, Go not into the way of the Gentiles, and into any city of the Samaritans enter ye not: But go rather to the lost sheep of the house of Israel.\"", "ref_es": "Mateo 10:5-6", "text_es": "\"A estos doce envió Jesús, y les dio instrucciones, diciendo: Por camino de gentiles no vayáis, y en ciudad de samaritanos no entréis, sino id antes a las ovejas perdidas de la casa de Israel.\""}, {"ref_en": "Matthew 10:7-10", "text_en": "\"And as ye go, preach, saying, The kingdom of heaven is at hand. Heal the sick, cleanse the lepers, raise the dead, cast out devils: freely ye have received, freely give. Provide neither gold, nor silver, nor brass in your purses, Nor scrip for your journey… for the workman is worthy of his meat.\"", "ref_es": "Mateo 10:7-10", "text_es": "\"Y yendo, predicad, diciendo: El reino de los cielos se ha acercado. Sanad enfermos, limpiad leprosos, resucitad muertos, echad fuera demonios; de gracia recibisteis, dad de gracia. No os proveáis de oro, ni plata… porque el obrero es digno de su alimento.\""}, {"ref_en": "Matthew 10:1", "text_en": "\"And when he had called unto him his twelve disciples, he gave them power against unclean spirits, to cast them out, and to heal all manner of sickness and all manner of disease.\"", "ref_es": "Mateo 10:1", "text_es": "\"Entonces llamando a sus doce discípulos, les dio autoridad sobre los espíritus inmundos, para que los echasen fuera, y para sanar toda enfermedad y toda dolencia.\""}];
 
 
-let VERSE_BANK = [{"id": "v1", "ref": "Matthew 10:1", "kjv": "And when he had called unto him his twelve disciples, he gave them power against unclean spirits, to cast them out, and to heal all manner of sickness and all manner of disease.", "slides": [0, 1, 2, 3, 4, 5, 6, 9, 14]}, {"id": "v2", "ref": "Matthew 10:2", "kjv": "Now the names of the twelve apostles are these; The first, Simon, who is called Peter, and Andrew his brother; James the son of Zebedee, and John his brother;", "slides": [7, 8]}, {"id": "v3", "ref": "Matthew 10:3", "kjv": "Philip, and Bartholomew; Thomas, and Matthew the publican; James the son of Alphaeus, and Lebbaeus, whose surname was Thaddaeus;", "slides": [10]}, {"id": "v4", "ref": "Matthew 10:4", "kjv": "Simon the Canaanite, and Judas Iscariot, who also betrayed him.", "slides": [11]}, {"id": "v5", "ref": "Matthew 10:5", "kjv": "These twelve Jesus sent forth, and commanded them, saying, Go not into the way of the Gentiles, and into any city of the Samaritans enter ye not:", "slides": [12]}, {"id": "v6", "ref": "Matthew 10:6", "kjv": "But go rather to the lost sheep of the house of Israel.", "slides": [12]}, {"id": "v7", "ref": "Matthew 10:7", "kjv": "And as ye go, preach, saying, The kingdom of heaven is at hand.", "slides": [13]}, {"id": "v8", "ref": "Matthew 10:8", "kjv": "Heal the sick, cleanse the lepers, raise the dead, cast out devils: freely ye have received, freely give.", "slides": [13]}, {"id": "v9", "ref": "Matthew 10:9", "kjv": "Provide neither gold, nor silver, nor brass in your purses,", "slides": [13]}, {"id": "v10", "ref": "Matthew 10:10", "kjv": "Nor scrip for your journey, neither two coats, neither shoes, nor yet staves: for the workman is worthy of his meat.", "slides": [13]}];
+const VERSE_BANK = [{"id": "v1", "ref": "Matthew 10:1", "kjv": "And when he had called unto him his twelve disciples, he gave them power against unclean spirits, to cast them out, and to heal all manner of sickness and all manner of disease.", "slides": [0, 1, 2, 3, 4, 5, 6, 9, 14]}, {"id": "v2", "ref": "Matthew 10:2", "kjv": "Now the names of the twelve apostles are these; The first, Simon, who is called Peter, and Andrew his brother; James the son of Zebedee, and John his brother;", "slides": [7, 8]}, {"id": "v3", "ref": "Matthew 10:3", "kjv": "Philip, and Bartholomew; Thomas, and Matthew the publican; James the son of Alphaeus, and Lebbaeus, whose surname was Thaddaeus;", "slides": [10]}, {"id": "v4", "ref": "Matthew 10:4", "kjv": "Simon the Canaanite, and Judas Iscariot, who also betrayed him.", "slides": [11]}, {"id": "v5", "ref": "Matthew 10:5", "kjv": "These twelve Jesus sent forth, and commanded them, saying, Go not into the way of the Gentiles, and into any city of the Samaritans enter ye not:", "slides": [12]}, {"id": "v6", "ref": "Matthew 10:6", "kjv": "But go rather to the lost sheep of the house of Israel.", "slides": [12]}, {"id": "v7", "ref": "Matthew 10:7", "kjv": "And as ye go, preach, saying, The kingdom of heaven is at hand.", "slides": [13]}, {"id": "v8", "ref": "Matthew 10:8", "kjv": "Heal the sick, cleanse the lepers, raise the dead, cast out devils: freely ye have received, freely give.", "slides": [13]}, {"id": "v9", "ref": "Matthew 10:9", "kjv": "Provide neither gold, nor silver, nor brass in your purses,", "slides": [13]}, {"id": "v10", "ref": "Matthew 10:10", "kjv": "Nor scrip for your journey, neither two coats, neither shoes, nor yet staves: for the workman is worthy of his meat.", "slides": [13]}];
 
-let QUESTIONS = [
+const QUESTIONS = [
   {
     section: "Personal Examination",
     questions: [
@@ -1792,47 +1709,7 @@ let QUESTIONS = [
 ];
 
 // =========================================================
-//  04b. LESSON LIBRARY
-//  Edit per series. One entry per lesson in this series — Lesson 1 is enabled now;
-//  fill in slides/notes/scriptureMap/verseBank/questions for Lesson 2+ and flip
-//  enabled to true when that lesson is ready to go live. The admin lesson picker
-//  (section 07) reads this list directly — locked lessons show as disabled there
-//  exactly like they do on the public hub cards.
-// =========================================================
-const LESSON_LIBRARY = [
-  { id:'lesson-1', label:'Lesson 1', date:'June 18, 2026', title:'The Price of Being Sent', ref:'Matthew 10:1-10',
-    enabled:true, slides:LESSON1_SLIDES, notes:NOTES_L1, scriptureMap:SCRIPTURE_MAP, verseBank:VERSE_BANK, questions:QUESTIONS },
-  { id:'lesson-2', label:'Lesson 2', date:'June 25, 2026', title:'The Instructions for the Work', ref:'Matthew 10:11-23',
-    enabled:false, slides:null, notes:null, scriptureMap:null, verseBank:null, questions:null },
-  { id:'lesson-3', label:'Lesson 3', date:'July 2, 2026', title:'How to Do Ministry', ref:'Matthew 10:24-33',
-    enabled:false, slides:null, notes:null, scriptureMap:null, verseBank:null, questions:null },
-  { id:'lesson-4', label:'Lesson 4', date:'July 9, 2026', title:'The Reward of the Work', ref:'Matthew 10:34-42',
-    enabled:false, slides:null, notes:null, scriptureMap:null, verseBank:null, questions:null }
-];
-let activeLessonIndex = 0;
-
-// Switch the whole app over to a different lesson in LESSON_LIBRARY. Safe to call from
-// admin only — locked lessons (enabled:false) refuse and return false so a stray click
-// can't blank the screen. fromSync:true means this came from another tab/device over
-// the realtime channel, so we don't re-broadcast it (avoids an echo loop).
-function loadLesson(idx, opts={}){
-  const L = LESSON_LIBRARY[idx];
-  if(!L || !L.enabled) return false;
-  activeLessonIndex = idx;
-  LESSON1_SLIDES = L.slides; NOTES_L1 = L.notes; SCRIPTURE_MAP = L.scriptureMap; VERSE_BANK = L.verseBank; QUESTIONS = L.questions;
-  curSlide = 0;
-  const ssl=document.getElementById('ssl');
-  if(ssl){ buildSlides(document.getElementById('ss-slides'),LESSON1_SLIDES); renderDots(LESSON1_SLIDES.length); _suppressSync=true; goTo(0); _suppressSync=false; }
-  if(typeof buildQuestionnaire==='function') buildQuestionnaire();
-  if(typeof buildVerseBank==='function') buildVerseBank();
-  if(typeof buildCtrlSurface==='function') buildCtrlSurface();
-  if(typeof admUpdateLessonPicker==='function') admUpdateLessonPicker();
-  if(!opts.fromSync){
-    sbSend({type:'lesson_change', lessonIndex:idx});
-  }
-  return true;
-}
-
+//  05. APP STATE
 //  DO NOT EDIT PER SERIES — these are runtime flags, not config.
 // =========================================================
 // ── STATE ──
@@ -1976,16 +1853,6 @@ function showAdminHub(){
   document.getElementById('admin-hub').classList.add('on');
   buildCtrlSurface();
   buildVerseBank();
-  admUpdateLessonPicker();
-}
-function admUpdateLessonPicker(){
-  const box=document.getElementById('adm-lesson-picker');
-  if(!box) return;
-  box.innerHTML=LESSON_LIBRARY.map((L,i)=>{
-    if(i===activeLessonIndex) return `<button class="ctrl-ab lesson-pill lesson-active" disabled>${L.label}<span class="lesson-tag">Live</span></button>`;
-    if(!L.enabled) return `<button class="ctrl-ab lesson-pill lesson-locked" disabled>${L.label}<span class="lesson-tag">Locked</span></button>`;
-    return `<button class="ctrl-ab lesson-pill" onclick="loadLesson(${i})">${L.label}<span class="lesson-tag">${L.date}</span></button>`;
-  }).join('');
 }
 function adminLogout(){
   ['tm_a','tm_u','tm_name'].forEach(k=>localStorage.removeItem(k));
@@ -2301,14 +2168,7 @@ function initRealtimeSync(){
       .on('postgres_changes',{event:'*',schema:'public',table:'sync_state'},payload=>{
         try{
           const msg=JSON.parse(payload.new.payload);
-          // v18: this used to be `if(!isAdmin) handleMessage(msg)`, which meant the admin
-          // never processed ANY realtime message from another device — only same-device
-          // BroadcastChannel testing worked. handleMessage already gates admin-only branches
-          // correctly (question_submit, poll_vote, etc.), and the screen-only branches
-          // (isProjector/isConfidence/...) are naturally false on the admin's own page, so
-          // always calling it here is what those branches need to actually receive
-          // attendee-originated messages from a phone, not just from a second tab.
-          handleMessage(msg);
+          if(!isAdmin) handleMessage(msg);
         }catch(e){}
       })
       .subscribe((status)=>{
@@ -2482,12 +2342,10 @@ function openAskDrawer(){const d=document.getElementById('ask-drawer'); if(d) d.
 function closeAskDrawer(){const d=document.getElementById('ask-drawer'); if(d) d.classList.remove('open');}
 function submitAskQuestion(){
   const ta=document.getElementById('ask-ta'); if(!ta||!ta.value.trim()) return;
-  const anonCb=document.getElementById('ask-anon-cb');
-  const anon=!!(anonCb && anonCb.checked);
-  const q={id:'q'+Date.now(), text:ta.value.trim(), name:anon?'Anonymous':(userName||'Anonymous'), anonymous:anon, ts:new Date().toISOString()};
+  const q={id:'q'+Date.now(), text:ta.value.trim(), name:userName||'Anonymous', ts:new Date().toISOString()};
   try{const old=JSON.parse(localStorage.getItem('tm_questions')||'[]'); old.unshift(q); localStorage.setItem('tm_questions',JSON.stringify(old.slice(0,50)));}catch(e){}
   sbSend({type:'question_submit',question:q}); questions.unshift(q); renderQuestionsMini();
-  ta.value=''; if(anonCb) anonCb.checked=false; const ok=document.getElementById('ask-ok'); if(ok){ok.classList.add('on');setTimeout(()=>ok.classList.remove('on'),1800);} setTimeout(closeAskDrawer,500);
+  ta.value=''; const ok=document.getElementById('ask-ok'); if(ok){ok.classList.add('on');setTimeout(()=>ok.classList.remove('on'),1800);} setTimeout(closeAskDrawer,500);
 }
 function renderQuestionsMini(){
   let box=document.getElementById('admin-q-mini');
@@ -2585,17 +2443,6 @@ function renderQuestionsMini(){
   window.__lastObsSlideAt=0;
   window.handleMessage=function(msg){
     if(!msg||!msg.type) return;
-    if(msg.type==='lesson_change' && !isAdmin){
-      loadLesson(msg.lessonIndex, {fromSync:true});
-      return;
-    }
-    if(msg.type==='qa_feature'){ showQAOverlay(msg.question||{}); return; }
-    if(msg.type==='qa_clear'){ hideQAOverlay(); return; }
-    if(msg.type==='poll_open'){ showPollCard(msg.poll); return; }
-    if(msg.type==='poll_vote'){ if(isAdmin) admRecordPollVote(msg); return; }
-    if(msg.type==='poll_close'){ hidePollCard(); return; }
-    if(msg.type==='poll_results'){ showPollResultsOverlay(msg.poll); return; }
-    if(msg.type==='poll_results_clear'){ hidePollResultsOverlay(); return; }
     if(isProjector){
       if(msg.type==='slide'){
         presentationStarted=true;
@@ -2914,250 +2761,6 @@ body.confidence-mode .conf-notes-text{
   };
 
   if(isConfidence) setTimeout(()=>window.updateConfidence(curSlide||0),0);
-})();
-</script>
-
-<!-- =========================================================
-     10. LIVE Q&A OVERLAY + POLLING (NEW — v18)
-     DO NOT EDIT PER SERIES. Unlike sections 08/09, this is not
-     a patch that overrides anything — it's new functionality
-     added cleanly on top. Reuses the existing sbSend/handleMessage
-     sync (no new backend, no database, matches the rest of the app).
-========================================================= -->
-<script id="v18-qa-poll-features">
-(function(){
-
-  // ---------- LIVE Q&A OVERLAY ----------
-  // qaFeaturedId tracks which question (if any) is currently pushed to the screens.
-  let qaFeaturedId = null;
-
-  window.showQAOverlay = function(q){
-    if(!q) return;
-    if(isProjector){
-      const ov=document.getElementById('qa-overlay');
-      const t=document.getElementById('qaov-text'), n=document.getElementById('qaov-name');
-      if(ov && t){
-        t.textContent=q.text||'';
-        if(n) n.textContent=q.anonymous?'Anonymous':(q.name||'Anonymous');
-        ov.classList.add('show');
-      }
-    }
-    if(isConfidence){
-      const b=document.getElementById('conf-qa-banner'), t=document.getElementById('conf-qa-text');
-      if(b && t){ t.textContent=q.text||''; b.classList.add('on'); }
-    }
-    if(isObsLower || isObsFull){
-      const ref=document.getElementById('obs-ref'), txt=document.getElementById('obs-text'), sum=document.getElementById('obs-summary');
-      if(ref) ref.textContent='Live Question';
-      if(txt) txt.textContent=q.text||'';
-      if(sum) sum.textContent=q.anonymous?'Anonymous':(q.name||'Anonymous');
-    }
-  };
-
-  window.hideQAOverlay = function(){
-    const ov=document.getElementById('qa-overlay'); if(ov) ov.classList.remove('show');
-    const b=document.getElementById('conf-qa-banner'); if(b) b.classList.remove('on');
-    if((isObsLower || isObsFull) && typeof window.showOBSSlide==='function'){
-      // Put the OBS lower-third/full output back to whatever the current slide is,
-      // rather than leaving the question text frozen on screen.
-      window.showOBSSlide(curSlide);
-    }
-  };
-
-  // Admin: called from the Feature button in the Live Questions panel (section 07).
-  window.featureQuestion = function(id){
-    const q=(questions||[]).find(x=>String(x.id)===String(id));
-    if(!q) return;
-    qaFeaturedId = q.id;
-    const payload={id:q.id, text:q.text, name:q.name, anonymous:!!q.anonymous};
-    sbSend({type:'qa_feature', question:payload});
-    if(typeof renderQuestionsMini==='function') renderQuestionsMini();
-  };
-  window.clearFeaturedQuestion = function(){
-    qaFeaturedId = null;
-    sbSend({type:'qa_clear'});
-    if(typeof renderQuestionsMini==='function') renderQuestionsMini();
-  };
-
-  // Upgrade the admin's Live Questions mini panel (built in section 07's
-  // renderQuestionsMini) with Feature/Clear/Hide controls. We patch it here rather
-  // than editing it in place because this is genuinely new behavior, not a fix.
-  const _prevRenderQuestionsMini = window.renderQuestionsMini;
-  window.renderQuestionsMini = function(){
-    let box=document.getElementById('admin-q-mini');
-    if(!box){
-      const right=document.querySelector('.ctrl-right [style*="overflow-y"]');
-      if(!right) return;
-      const div=document.createElement('div');
-      div.className='ctrl-ag';
-      div.innerHTML='<div class="ctrl-ag-lbl">Live Questions</div><div id="admin-q-mini" style="font-family:var(--fc);font-size:.72rem;color:var(--mu);line-height:1.4"></div>';
-      right.appendChild(div);
-      box=div.querySelector('#admin-q-mini');
-    }
-    const local=(()=>{try{return JSON.parse(localStorage.getItem('tm_questions')||'[]')}catch(e){return[]}})();
-    const all=[...(questions||[]),...local].filter((q,i,a)=>a.findIndex(x=>x.id===q.id)===i).slice(0,8);
-    if(!all.length){ box.innerHTML='No questions yet.'; return; }
-    box.innerHTML = (qaFeaturedId ? `<div style="margin-bottom:8px"><button class="ctrl-ab danger" style="width:100%" onclick="clearFeaturedQuestion()">&#10005; Clear Featured Question</button></div>` : '') +
-      all.map(q=>{
-        const isFeat = String(q.id)===String(qaFeaturedId);
-        return `<div style="border-top:1px solid var(--ln);padding:8px 0;${isFeat?'background:rgba(212,147,59,.08)':''}">
-          <span style="color:var(--red)">${(q.name||'Anonymous')}:</span> ${q.text}
-          <div style="margin-top:5px">
-            <button class="ctrl-ab" style="font-size:.5rem;padding:4px 8px;${isFeat?'border-color:var(--gold);color:var(--gold)':''}" onclick="featureQuestion('${q.id}')">${isFeat?'Featured \u2713':'\u25B6 Feature on Screen'}</button>
-          </div>
-        </div>`;
-      }).join('');
-  };
-
-  // ---------- LIVE POLLING ----------
-  // Single active poll at a time, kept in memory + localStorage. Votes are tallied
-  // live on the admin's own device as poll_vote broadcasts arrive — same ephemeral,
-  // no-database pattern the rest of the app already uses for Q&A.
-  let activePoll = null;       // {id, question, options:[...]}
-  let pollTally = null;        // {0:count, 1:count, ...}
-  let pollVoters = {};         // {voterId: optionIndex} — admin-side, de-dupes votes
-
-  function pollVoterId(){
-    let id = localStorage.getItem('tm_voter_id');
-    if(!id){ id = 'v_'+Date.now()+'_'+Math.random().toString(36).slice(2,8); localStorage.setItem('tm_voter_id', id); }
-    return id;
-  }
-
-  // Admin: open a new poll from the two text inputs in the Live Poll panel.
-  window.adminOpenPoll = function(){
-    const qEl=document.getElementById('adm-poll-q'), oEl=document.getElementById('adm-poll-opts');
-    const question=(qEl&&qEl.value||'').trim();
-    const options=(oEl&&oEl.value||'').split(',').map(s=>s.trim()).filter(Boolean);
-    if(!question || options.length<2 || options.length>6){
-      alert('Enter a question and 2-6 comma-separated options.');
-      return;
-    }
-    activePoll = { id:'poll_'+Date.now(), question, options };
-    pollTally = options.map(()=>0);
-    pollVoters = {};
-    try{ localStorage.setItem('tm_active_poll', JSON.stringify(activePoll)); }catch(e){}
-    sbSend({type:'poll_open', poll:activePoll});
-    admRenderPollPanel();
-  };
-
-  window.adminClosePoll = function(){
-    activePoll = null; pollTally = null; pollVoters = {};
-    try{ localStorage.removeItem('tm_active_poll'); }catch(e){}
-    sbSend({type:'poll_close'});
-    sbSend({type:'poll_results_clear'});
-    admRenderPollPanel();
-  };
-
-  window.adminShowPollResults = function(){
-    if(!activePoll || !pollTally) return;
-    sbSend({type:'poll_results', poll:{ question:activePoll.question, options:activePoll.options, tally:pollTally }});
-  };
-
-  function admRenderPollPanel(){
-    const build=document.getElementById('adm-poll-build'), live=document.getElementById('adm-poll-live');
-    if(!build || !live) return;
-    if(!activePoll){ build.style.display='block'; live.style.display='none'; return; }
-    build.style.display='none'; live.style.display='block';
-    const qEl=document.getElementById('adm-poll-live-q'); if(qEl) qEl.textContent=activePoll.question;
-    admRenderPollTally();
-  }
-  function admRenderPollTally(){
-    const box=document.getElementById('adm-poll-tally');
-    if(!box || !activePoll || !pollTally) return;
-    const total=pollTally.reduce((a,b)=>a+b,0)||1;
-    box.innerHTML=activePoll.options.map((opt,i)=>{
-      const pct=Math.round((pollTally[i]||0)/total*100);
-      return `<div style="font-family:var(--fc);font-size:.7rem;color:var(--w)">
-        <div style="display:flex;justify-content:space-between;margin-bottom:3px"><span>${opt}</span><span style="color:var(--gold)">${pollTally[i]||0} &middot; ${pct}%</span></div>
-        <div style="height:6px;background:rgba(255,255,255,.08)"><div style="height:100%;width:${pct}%;background:var(--gold)"></div></div>
-      </div>`;
-    }).join('');
-  }
-
-  // Admin: receives poll_vote broadcasts while a poll is open. Each voter only counts once
-  // per poll (re-votes overwrite their previous choice rather than double-counting).
-  window.admRecordPollVote = function(msg){
-    if(!activePoll || !msg || msg.pollId!==activePoll.id) return;
-    const prev=pollVoters[msg.voterId];
-    if(prev!==undefined && pollTally[prev]!==undefined) pollTally[prev]--;
-    pollVoters[msg.voterId]=msg.optionIndex;
-    if(pollTally[msg.optionIndex]!==undefined) pollTally[msg.optionIndex]++;
-    admRenderPollTally();
-  };
-
-  // Attendee (hub): a poll just opened — show the card.
-  window.showPollCard = function(poll){
-    if(isAdmin || !poll) return;
-    activePoll = poll;
-    try{ localStorage.setItem('tm_active_poll', JSON.stringify(poll)); }catch(e){}
-    renderPollCard();
-  };
-  window.hidePollCard = function(){
-    activePoll = null;
-    try{ localStorage.removeItem('tm_active_poll'); }catch(e){}
-    const card=document.getElementById('poll-card'); if(card) card.style.display='none';
-  };
-  function renderPollCard(){
-    const card=document.getElementById('poll-card'), qEl=document.getElementById('poll-card-q'),
-          opts=document.getElementById('poll-card-opts'), thanks=document.getElementById('poll-card-thanks');
-    if(!card || !activePoll) return;
-    card.style.display='block';
-    if(qEl) qEl.textContent=activePoll.question;
-    const votedKey='tm_poll_voted_'+activePoll.id;
-    const votedIdx=localStorage.getItem(votedKey);
-    if(opts) opts.innerHTML=activePoll.options.map((opt,i)=>
-      `<button class="poll-opt-btn${String(i)===votedIdx?' voted':''}" onclick="submitPollVote(${i})" ${votedIdx!==null?'disabled':''}>${opt}${String(i)===votedIdx?' &#10003;':''}</button>`
-    ).join('');
-    if(thanks) thanks.style.display = votedIdx!==null ? 'block' : 'none';
-  }
-  // Attendee: cast a vote. One vote per device per poll, enforced client-side via localStorage —
-  // matches the trust level of the rest of this app's audience features (no login system).
-  window.submitPollVote = function(optionIndex){
-    if(!activePoll) return;
-    const votedKey='tm_poll_voted_'+activePoll.id;
-    if(localStorage.getItem(votedKey)!==null) return;
-    localStorage.setItem(votedKey, String(optionIndex));
-    sbSend({type:'poll_vote', pollId:activePoll.id, optionIndex, voterId:pollVoterId()});
-    renderPollCard();
-  };
-
-  // Any screen: show/hide the full results overlay (projector + OBS, same pattern as Q&A).
-  window.showPollResultsOverlay = function(poll){
-    if(!poll) return;
-    const total=(poll.tally||[]).reduce((a,b)=>a+b,0)||1;
-    if(isProjector){
-      const ov=document.getElementById('poll-overlay'), q=document.getElementById('pollov-q'), bars=document.getElementById('pollov-bars');
-      if(ov && q && bars){
-        q.textContent=poll.question;
-        bars.innerHTML=poll.options.map((opt,i)=>{
-          const pct=Math.round((poll.tally[i]||0)/total*100);
-          return `<div class="pollov-bar-row"><div class="pollov-bar-lbl"><span>${opt}</span><span>${pct}%</span></div><div class="pollov-bar-track"><div class="pollov-bar-fill" style="width:${pct}%"></div></div></div>`;
-        }).join('');
-        ov.classList.add('show');
-      }
-    }
-    if(isObsLower || isObsFull){
-      const ref=document.getElementById('obs-ref'), txt=document.getElementById('obs-text'), sum=document.getElementById('obs-summary');
-      const top=poll.options.map((o,i)=>({o,c:poll.tally[i]||0})).sort((a,b)=>b.c-a.c)[0];
-      if(ref) ref.textContent='Poll Results';
-      if(txt) txt.textContent=poll.question;
-      if(sum) sum.textContent=top?`Leading: ${top.o} (${Math.round(top.c/total*100)}%)`:'';
-    }
-  };
-  window.hidePollResultsOverlay = function(){
-    const ov=document.getElementById('poll-overlay'); if(ov) ov.classList.remove('show');
-    if((isObsLower || isObsFull) && typeof window.showOBSSlide==='function') window.showOBSSlide(curSlide);
-  };
-
-  // Restore an in-progress poll on reload (attendee side only — admin's tally is
-  // session-only by design, matching how Q&A already behaves).
-  if(!isAdmin){
-    try{
-      const saved=JSON.parse(localStorage.getItem('tm_active_poll')||'null');
-      if(saved) window.showPollCard(saved);
-    }catch(e){}
-  }
-
 })();
 </script>
 
