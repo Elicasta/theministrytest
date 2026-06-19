@@ -56,12 +56,46 @@ silently into one series's copy.
 02. THEME CONFIG           — edit per series
 03. LESSON DATA            — edit per series
 04. SCRIPTURE DATA         — edit per series
+04b. LESSON LIBRARY        — edit per series (Lesson 2-4 placeholders live here)
 05. APP STATE              — do not edit
 06. ROUTING / INIT         — do not edit
 07. UI, RENDERERS & CONTROLS — do not edit
 08. OBS + TEACHING SLIDE LOGIC (active patch) — do not edit
 09. CONFIDENCE MONITOR LOGIC (active patch)   — do not edit
+10. LIVE Q&A OVERLAY + POLLING (new, not a patch) — do not edit
 ```
+
+## Adding Lesson 2 (or 3, or 4)
+
+1. Find `LESSON_LIBRARY` (section 04b). Lesson 2's entry currently has `enabled:false`
+   and `null` for everything.
+2. Build that lesson's slides/notes/scripture map/verse bank/questions the same way
+   Lesson 1's are built in sections 03-04 (you can write them as their own `let
+   LESSON2_SLIDES = [...]` etc. above `LESSON_LIBRARY`, then reference them in the entry).
+3. Set `enabled:true`.
+4. The admin "Lessons" picker will show it as clickable instead of locked. Clicking it
+   switches the whole app over — slides, verse bank, questionnaire, and every connected
+   screen.
+5. Separately, update the matching `lcard` on the public hub (it's static markup, not
+   yet wired to `LESSON_LIBRARY`) so attendees see it unlock too.
+
+## Live Q&A overlay
+
+Admin's Live Questions panel has a "Feature on Screen" button per question. Tapping it
+pushes that question full-screen to `/projector` (gold accent, distinct from the red
+scripture overlay), as a small banner on `/confidence`, and into the lower-third/full
+text on the OBS outputs. "Clear Featured Question" closes it everywhere.
+
+## Live polling
+
+Admin's "Live Poll" panel: type a question, type 2-6 comma-separated options, "Open
+Poll." It shows up as a card at the top of the attendee hub. Each device gets one vote
+per poll (no login system, so this is enforced client-side — same trust level as the
+rest of the app's audience features). Admin sees live tallies; "Show Results" pushes a
+bar-chart overlay to the same screens the Q&A overlay uses.
+
+Don't run a Q&A overlay and a poll results overlay at the same time — clear one before
+opening the other, since they share the same on-screen real estate on `/projector`.
 
 ### Patch layers (read this before touching JS)
 
