@@ -1,166 +1,359 @@
-# The Ministry — Sermon Presentation System
+# The Ministry Presenter - Master Template
 
-A static, single-file live teaching/presenter app for church services. One `index.html`
-drives every screen — the big projector, a side scripture display, a confidence monitor
-for the speaker, OBS broadcast outputs, and a desktop + mobile presenter controller — all
-kept in sync over Supabase Realtime (with a same-device `BroadcastChannel` fallback).
+This repo is a static sermon presentation system for live teaching environments.
 
-This is v17, a cleanup/master-template pass on the stable v16 build. **No new features,
-no rewrite.** See `CHANGELOG.md` for exactly what changed.
+It is designed to run multiple outputs from one deployed site:
 
-## Routes
-
-| Route | What it is |
+| Route | Purpose |
 |---|---|
-| `/projector` | Main big-screen teaching projector. |
-| `/scriptures` | Side-screen scripture display. KJV primary, RVR 1960 underneath. |
-| `/confidence` | Confidence monitor for the speaker — current slide, next main slide, timer, notes, scripture. |
-| `/obslowerthirds` | OBS browser-source lower third (broadcast-style). |
-| `/obsslides` | OBS browser-source full slide output (scripture or clean main point). |
-| `/admin` and `/mobile` | **Not separate routes.** Both resolve to the landing page. Click **Admin**, enter the admin password, and you're in the desktop controller. From there, click **Mobile Mode** to get the phone-sized controller. This is the existing behavior — it was intentionally left alone in this cleanup (see "Routing" below). |
+| `/projector` | Main big-screen teaching projector |
+| `/scriptures` | Side scripture screens with KJV primary and RVR 1960 underneath |
+| `/confidence` | Speaker confidence monitor with current slide, next main slide, timer, and notes |
+| `/admin` | Desktop presenter/admin controller |
+| `/mobile` | Phone-friendly presenter controller |
+| `/obslowerthirds` | OBS lower-third output |
+| `/obsslides` | OBS full-slide output |
 
-Legacy query-string routes (`?projector=1`, `?screen=2`, `?obs=lower`, `?obs=full`) still
-work as a fallback — `vercel.json` rewrites every path to `index.html`, and the app reads
-`location.pathname` first, then falls back to the query string.
+The current file is intentionally still a single-file app. That keeps deployment simple and makes it safe to duplicate for a new series.
 
-## How to duplicate this for a new series
+## Safe editing sections
 
-1. Copy the whole project folder.
-2. Open `index.html` and edit, in order:
-   - **Section 01 — SERIES CONFIG**: title, subtitle, speaker, attendee password, admin
-     password, Supabase channel ID (must be unique per series — this is the Realtime
-     "room" name), and the QR code URL text.
-   - **Section 02 — THEME CONFIG**: the `THEME.colors` object and `THEME.backgroundImage`.
-     `applyTheme()` pushes these straight into the CSS variables the whole app already
-     uses, so you should not need to touch any CSS rule.
-   - **Section 03 — LESSON DATA**: replace `LESSON1_SLIDES` and `NOTES_L1` with the new
-     lesson's slides and speaker notes.
-   - **Section 04 — SCRIPTURE DATA**: replace `SCRIPTURE_MAP`, `VERSE_BANK`, and
-     `QUESTIONS` (the workbook/questionnaire content) for the new lesson.
-3. Replace `assets/ministry-bg.jpeg` (or point `THEME.backgroundImage` at a new file) and
-   the two QR images in `assets/`.
-4. Search for any literal `Elder Eli Castaneda`, `Matthew 10`, or `The Ministry` strings
-   you want changed that live inside slide/markup data you're rewriting anyway in step 2
-   — these are content, not config, so they're not centralized.
-5. Deploy.
+Open `index.html` and edit only these sections for a new series:
 
-**Do not touch:** sections 05–09 (state, routing/init, renderers, OBS/teaching-slide logic,
-confidence monitor logic). These are the engine. If something about the engine itself
-needs to change for every series, that's a real feature request — flag it, don't patch it
-silently into one series's copy.
-
-## Section map (what's actually in `index.html`)
-
-```
-01. SERIES CONFIG          — edit per series
-02. THEME CONFIG           — edit per series
-03. LESSON DATA            — edit per series
-04. SCRIPTURE DATA         — edit per series
-05. APP STATE              — do not edit
-06. ROUTING / INIT         — do not edit
-07. UI, RENDERERS & CONTROLS — do not edit
-08. OBS + TEACHING SLIDE LOGIC (active patch) — do not edit
-09. CONFIDENCE MONITOR LOGIC (active patch)   — do not edit
+```js
+SERIES_CONFIG
+THEME_CONFIG
+PASSWORDS
+LESSON1_SLIDES
+SCRIPTURE_MAP
+VERSE_BANK
+QUESTIONS
+NOTES_L1
 ```
 
-### Patch layers (read this before touching JS)
+The public behavior should stay stable if you only touch those sections.
 
-This file grew through a series of in-place patches (`v10` through `v16`), each one a
-`<style>`/`<script>` block added near the bottom that **overrides** an earlier function by
-redefining the same global name. That pattern is still here in sections 08 and 09 — it
-works, and rewriting it into a single clean pass was judged out of scope for this cleanup
-(see "What this pass did not do," below). If you're debugging the confidence monitor or
-the OBS output and the behavior doesn't match what you see in section 07, check section 09
-or 08 first — the last definition in document order is the one that runs:
+## Do not edit per series
 
-- `renderSlide`, `slidePlainTitle`, `showOBS`, `showOBSSlide`, `handleMessage` →
-  **section 08** has the final word.
-- `updateConfidence`, `updateConfidenceScripture`, `clearConfidenceScripture`,
-  `broadcastScripture`, `pushRawScripture` → **section 09** has the final word (and section
-  09 also wraps `handleMessage` again, on top of section 08's version, so the confidence
-  monitor doesn't get hijacked by auto-scripture pushes).
+Avoid changing these unless you are patching a bug across the whole template:
 
-## Deploying to Vercel
+```txt
+STATE / SYNC ENGINE
+RENDERERS
+PROJECTOR / SCRIPTURES / OBS / CONFIDENCE LOGIC
+ADMIN / MOBILE CONTROLLERS
+INIT
+```
 
-1. Push to a GitHub repo (or drag-and-drop deploy via the Vercel dashboard).
-2. Import the repo in Vercel. No build step — it's static. `vercel.json` already rewrites
-   every path to `index.html` so the clean routes above work.
-3. If you use the Supabase Realtime sync, set `window.SB_KEY` in section 01's area (search
-   `SB_KEY`) to your Supabase anon public key, or wire it through an environment variable
-   if you'd rather not commit it.
-4. `api/waitlist.js` and `api/workbook-submit.js`, and `content/series/...`, are **not**
-   called by the live app — see "What this pass did not do" below before relying on them.
+Those sections are the live presentation engine.
 
-## Using this with ProPresenter / a dual-projector setup
+## Theme changes
 
-- Point your **main projector** (ProPresenter or a browser window) at `/projector`.
-- Point your **side/confidence screen** at `/scriptures` (audience-facing scripture) or
-  `/confidence` (speaker-facing monitor), depending on what that screen is for.
-- Run the **admin controller** from a laptop at the root URL → Admin. Use **Mobile Mode**
-  from a phone for hands-free Next/Previous from the pulpit.
-- For OBS: add `/obslowerthirds` and/or `/obsslides` as Browser Sources. Toggle green
-  screen mode on `/obsslides` with the on-screen control if you're keying it over a camera
-  feed instead of using the built-in background.
+Change the series colors in `THEME_CONFIG`:
 
-## Testing before going live
+```js
+const THEME_CONFIG = Object.freeze({
+  backgroundImage: 'assets/ministry-bg.jpeg',
+  colors: {
+    bg: '#0A0A0A',
+    bgd: '#111111',
+    bgc: '#1A1A1A',
+    bgcc: '#1E1E1E',
+    text: '#F1EDE4',
+    muted: '#666666',
+    line: '#202020',
+    accent: '#E8180D',
+    accentDark: '#C41409',
+    gold: '#D4933B'
+  }
+});
+```
 
-Run through this exact checklist (from the original cleanup brief) before every service:
+The CSS variables are applied automatically by `applyThemeConfig()`.
 
-1. Open `/projector`, `/scriptures`, and `/confidence` in three tabs/screens.
-2. Open the root URL → Admin.
-3. Confirm all outputs show standby/loading screens.
-4. Press **Start**.
-5. Confirm Projector goes to slide 1.
-6. Confirm Scriptures syncs when a slide has scripture.
-7. Confirm Confidence shows the current slide and the correct **next main slide** (it
-   should skip support-scripture slides, not show one as if it were the next teaching
-   point).
-8. Press **Next**.
-9. Confirm the Projector 1 scripture overlay clears.
-10. Confirm Scriptures (Projector 2) still follows scripture sync.
-11. Manually push a scripture overlay to Projector 1 from the verse bank.
-12. Confirm Projector 1 shows KJV only, centered.
-13. Confirm Scriptures shows KJV/RVR together.
-14. Confirm Confidence shows fitted scripture text, not huge/overflowing text.
-15. Test Mobile Mode on an actual phone-sized viewport.
-16. Test `/obslowerthirds`.
-17. Test `/obsslides` with and without green-screen mode.
-18. **New this pass:** from a second device/tab acting as an attendee, submit a question
-    through the "Ask" drawer and confirm it shows up in the admin's Live Questions panel.
-    Then unlock the questionnaire from admin and confirm the attendee tab's questionnaire
-    actually unlocks without a page reload. (This was broken before this pass — see
-    CHANGELOG.)
+## New series workflow
 
-## What this pass did and did not do
+1. Duplicate this folder.
+2. Rename the folder for the new series.
+3. Replace the background image in `assets/`.
+4. Update `SERIES_CONFIG`.
+5. Update `THEME_CONFIG`.
+6. Update `LESSON1_SLIDES`, `SCRIPTURE_MAP`, `VERSE_BANK`, `QUESTIONS`, and `NOTES_L1`.
+7. Deploy the folder to Vercel.
+8. Test every route before using it live.
 
-**Did:**
-- Organized the file into the 9 labeled sections above.
-- Added `SERIES_CONFIG` and `THEME` as the single editable surface for series identity
-  and color/background — wired into the existing CSS variables, zero visual change.
-- Fixed a real bug: `question_submit` and `q_unlock` message handling was silently
-  dropped when the `v13` patch replaced `handleMessage` and didn't carry those two
-  branches forward. Live Q&A-to-admin and live questionnaire-unlock were broken. Restored.
-- Removed five blocks of dead code (the pre-`v13`/pre-`v16` versions of `renderSlide`,
-  `slidePlainTitle`, `showOBS`, `showOBSSlide`, `handleMessage`, `updateConfidence`, and
-  friends) that were silently overridden and never actually ran. Verified each one's full
-  call chain before deleting — see the inline comments left in their place.
-- Confirmed no leftover "Slide 1/15" indicators, no misspellings of Previous / Confidence
-  / Projector, and no stray debug labels — this file was already clean on those points.
+## ProPresenter setup
 
-**Did not do** (flagged as out of scope, not silently skipped):
-- Did **not** physically reorder functions into the 9 sections. Sections 05–09 are real,
-  contiguous regions of the file, but section 07 is one large pile of UI/control functions
-  rather than further split into renderers vs. admin vs. mobile. Splitting that apart for
-  real would mean moving ~800 lines of interdependent code with no live Supabase
-  environment to test against — that's a rewrite risk, not a cleanup, and it was explicitly
-  out of scope ("do not break live output" is priority one).
-- Did **not** touch `content/series/the-ministry/` (a disabled markdown-lesson-loader
-  experiment) or `api/waitlist.js` / `api/workbook-submit.js` (serverless functions for
-  email capture and workbook email delivery). None of these are called by `index.html` —
-  they're inert. They look like the start of a markdown-loader/database direction, which
-  the cleanup brief explicitly said not to build. Left in place untouched rather than
-  deleted, in case they're intentional groundwork — but worth a deliberate decision
-  (finish wiring them, or delete them) rather than leaving them as ambient clutter.
-- Did **not** do a full dead-CSS sweep. Spot checks didn't turn up anything live and
-  breakable, but a confident "delete this rule" pass needs the rendered app in front of
-  you, not a text read of 600+ lines of CSS.
+Use the deployed site as web outputs.
+
+Recommended URLs:
+
+```txt
+https://your-domain.vercel.app/projector
+https://your-domain.vercel.app/scriptures
+https://your-domain.vercel.app/confidence
+```
+
+Use `/admin` or `/mobile` to control the presentation.
+
+Do not build every sermon slide inside ProPresenter. ProPresenter should only hold the web outputs.
+
+## OBS setup
+
+Use browser sources:
+
+```txt
+https://your-domain.vercel.app/obslowerthirds
+https://your-domain.vercel.app/obsslides
+```
+
+Set browser source size to `1920x1080`.
+
+## Deployment
+
+This project deploys as a static Vercel app with two optional API routes:
+
+```txt
+api/waitlist.js
+api/workbook-submit.js
+```
+
+If Supabase or Resend environment variables are not configured, the static presentation still runs.
+
+## Testing checklist
+
+Before a live session, test:
+
+1. Open `/projector`, `/scriptures`, and `/confidence`.
+2. Open `/admin`.
+3. Confirm outputs show standby screens.
+4. Press Start.
+5. Confirm Projector 1 moves to slide 1.
+6. Confirm `/scriptures` syncs when Auto P2 is on.
+7. Confirm `/confidence` shows the correct current and next main slide.
+8. Press Next and Previous.
+9. Confirm Projector 1 scripture overlay clears on slide changes.
+10. Manually push a scripture overlay.
+11. Confirm Projector 1 shows KJV only.
+12. Confirm `/scriptures` shows KJV and RVR 1960.
+13. Confirm OBS lower thirds and OBS slides render cleanly.
+14. Test `/mobile` in portrait mode.
+15. Confirm no public output shows debug labels or oversized controls.
+
+## Patch rule
+
+If a bug affects the engine, patch the master template first. Then copy the patched engine section into active series folders.
+
+If a change is only series content, edit only that series folder.
+
+
+### Mobile haptics
+
+Mobile Mode includes light haptic feedback for Start, Previous, Next, Overlay, Clear, and verse push controls. This uses the browser Vibration API. Android Chrome supports it. iOS Safari may ignore it, so the controls still work normally without vibration.
+
+## Mobile controller feedback
+
+The Mobile Mode controller includes two feedback layers:
+
+1. Vibration through `navigator.vibrate()` where the browser supports it. This usually works on Android Chrome and Android installed PWAs.
+2. Visual tap feedback for iPhone, iPad, and iOS home-screen PWAs where web vibration is usually ignored.
+
+The visual fallback includes button compression, a quick tap pulse, status glow, and small slide/timer/title bump feedback. This is intentionally local-only and does not change sync behavior.
+
+## v22 Poll System Notes
+
+The poll system is frontend-only in this static template. It uses the existing app sync channel to open polls, close polls, and report votes back to the presenter.
+
+Presenter locations:
+
+- `/admin` → Polls tab
+- `/mobile` → Poll button
+
+Poll types:
+
+- Yes / No poll
+- Multiple choice poll
+- Premade poll bank
+- On-the-fly custom poll
+
+Audience behavior:
+
+- When a poll is active, the attendee screen is taken over by the poll overlay.
+- Attendees can save their answer anonymously.
+- Answers are stored locally in the attendee browser and broadcast back through the existing sync channel when available.
+
+Output behavior:
+
+- Projector/OBS outputs show percentage results.
+- Advancing the slide kills the active poll overlay, similar to clearing verse overlays.
+
+Note: because this is still a static presentation template, long-term poll persistence across all devices should eventually move to a real backend. For now, this keeps the live system simple and avoids adding login/database/editor features.
+
+
+### v23 behavior note
+
+- The `/scriptures` screen should start on the series/title standby screen. It should not show a scripture immediately when Start is pressed.
+- When a poll is active, `/scriptures` is intentionally taken over by the poll result display so the side screens can show percentages clearly.
+- Advancing slides or closing the poll clears the poll takeover.
+
+
+### Poll output behavior
+
+When a poll is active:
+
+- `/projector` shows full-screen poll results.
+- `/scriptures` shows full-screen poll results.
+- `/obsslides` shows full-screen poll results.
+- `/obslowerthirds` shows compact broadcast-style poll results in the lower-third position.
+- Next or Previous clears the active poll.
+
+
+## v25 Notes
+
+### Audience slave mode
+When the admin starts or advances the presentation, attendee/user screens automatically enter a live session view and follow the admin-controlled slide state. Users can press the top-right `X` to leave the live view. The hub shows `Return to Session` while a session is live.
+
+### Poll persistence
+Polls are archived locally in the presenter's browser under `tm_lesson_poll_archive_v1`. This preserves on-the-fly polls and their anonymous answers when a new poll replaces the old one or when a poll is killed/closed. For real cross-device/server persistence, use the optional SQL file in `supabase/polls.sql` as the starting migration.
+
+### Mobile poll editing
+While the mobile poll editor is open or an input/textarea is focused, keyboard shortcuts are blocked so spaces/arrows do not move slides before the poll is launched.
+
+### v26 Audience Slave Mode Notes
+When the audience/user side enters live slave mode, the slide navigation chrome is hidden so attendees cannot accidentally navigate the lesson. They can exit with the **Exit Live ×** button and return later from the hub using **Return to Session** while the session is live.
+
+
+### Live Questions
+Audience questions submitted from the user hub appear in `/admin` under **Controls → Live Questions**. The panel shows the most recent submitted questions and updates when `question_submit` messages arrive.
+
+### Audience Slave Mode
+When a session is live, the audience/user side follows the admin-controlled presentation. In this mode, slide navigation is disabled for the audience. Users can only interact with active polls or press **Exit Live ×** to return to the hub.
+
+## Supabase schema
+
+Run this when setting up persistence:
+
+```sql
+-- open Supabase SQL Editor and paste:
+supabase/schema.sql
+```
+
+The schema includes:
+
+- `attendees`
+- `responses`
+- `sync_state`
+- `lesson_questions`
+- `lesson_polls`
+- `lesson_poll_votes`
+
+The app still works without persistence. Live questions save locally and broadcast immediately. If `SUPABASE_URL` and `SUPABASE_ANON_KEY` are configured in Vercel, `/api/question-submit` can save live questions into `lesson_questions`.
+
+## Live data notes
+
+Questions and polls use Vercel API routes plus Supabase tables.
+
+Required Vercel environment variables:
+
+```txt
+SUPABASE_URL=https://cgliqvizpcctqhsldixn.supabase.co
+SUPABASE_ANON_KEY=your_anon_public_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+```
+
+Run this SQL in Supabase first:
+
+```txt
+supabase/schema.sql
+```
+
+Admin live data pages:
+
+```txt
+/questions
+/polls
+```
+
+If questions save in Supabase but do not show in `/admin`, check `/api/questions-list` in Vercel logs.
+
+Polls were previously frontend-only. v30 wires poll save and poll vote APIs so `lesson_polls` and `lesson_poll_votes` can fill.
+
+### v31 Admin data notes
+
+Questions now appear inside `/admin` as a **Questions** tab next to Slides, Verse Bank, and Polls. Answered poll results now appear inside the **Polls** tab.
+
+Attendees save when a user enters the session password. This uses `/api/waitlist` and can save a name-only check-in without requiring an email address.
+
+Run `supabase/schema.sql` again after this update so `attendees` has these optional tracking fields:
+
+- `source`
+- `series_slug`
+- `lesson_slug`
+
+Optional check endpoint:
+
+```txt
+/api/attendees-list?series_slug=the-ministry&lesson_slug=lesson-1
+```
+
+
+## v32 Supabase patch
+If polls or attendees do not save, run `supabase/v32-poll-attendee-patch.sql` in Supabase SQL Editor, redeploy Vercel, then test one poll and one attendee check-in.
+
+## v33 attendee identity notes
+
+Audience users now enter with:
+
+- name
+- email
+- access code
+
+The app stores a local `session_id` and receives an `attendee_id` / `email_hash` from `/api/waitlist`.
+Questions and poll votes include this attendee/session identity so the admin archive and Supabase data stay tied together without exposing email publicly.
+
+Run this SQL patch if upgrading an older database:
+
+```txt
+supabase/v33-attendee-identity-patch.sql
+```
+
+
+## v34 Supabase Realtime Wiring Fix
+- Added `/api/config` so browser outputs can load `SUPABASE_URL` and `SUPABASE_ANON_KEY` from Vercel environment variables.
+- Restored local-first BroadcastChannel behavior so same-machine controls stay snappy.
+- Made Supabase sync fire-and-forget so phone taps do not wait on the network.
+- Added visible connection fallback labels for Local only / Live / Realtime error states.
+- Did not change projector visuals, confidence layout, poll UI, or routes.
+
+### v35 admin data notes
+The Admin Polls tab now shows the currently active live poll and its results, plus answered poll archive beneath it. The Questions tab and right sidebar use the same question normalizer so names display consistently.
+
+
+## Lesson selection
+
+Lesson 1 remains the default. To run Lesson 2, add `?lesson=lesson-2` to each presentation route:
+
+```txt
+/projector?lesson=lesson-2
+/scriptures?lesson=lesson-2
+/confidence?lesson=lesson-2
+/admin?lesson=lesson-2
+/mobile?lesson=lesson-2
+/obslowerthirds?lesson=lesson-2
+/obsslides?lesson=lesson-2
+```
+
+The admin screen also includes Lesson 1 and Lesson 2 quick links. Keep all live outputs on the same lesson query so the slide numbers, scripture map, poll archive, questions, and controller stay aligned.
+
+### v38 lesson selection behavior
+Use the permanent routes for live screens:
+
+- `/projector`
+- `/scriptures`
+- `/confidence`
+- `/mobile`
+- `/obslowerthirds`
+- `/obsslides`
+- `/admin`
+
+Choose Lesson 1 or Lesson 2 from `/admin`. The selected lesson is broadcast to all open outputs. Query params such as `?lesson=lesson-2` remain available for testing, but are no longer required for normal live use.

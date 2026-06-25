@@ -1,57 +1,163 @@
+## v32 Poll/Attendee Supabase Compatibility
+- Made poll save API independent of `on_conflict` so older Supabase tables work.
+- Made poll archive API use `select=*` and safer ordering.
+- Added `supabase/v32-poll-attendee-patch.sql` for existing projects.
+- Preserved admin tabs, audience lock, and presentation behavior.
+
+
+## v28 User Interaction Lock + Admin Questions Panel
+- Locked audience slave mode so left/right screen taps no longer advance or reverse slides.
+- Kept poll overlays interactive while the live audience view is locked.
+- Added a persistent Live Questions panel back into the admin controls.
+- Questions submitted from the user side now show in the admin questions panel.
+
+
+## v27 Confidence Poll Fit
+- Fitted live poll results inside the confidence monitor current-slide panel.
+- Reduced poll question/results typography so results no longer overflow the confidence box.
+- Preserved projector, scripture, OBS, user slave mode, and mobile controller behavior.
+
+
+## v24 Poll Main Screen Routing
+- Active polls now take over the main projector and OBS full slide outputs.
+- OBS lower thirds now shows active poll results in a lower-third format instead of a full-screen takeover.
+- Poll overlays still clear on Next/Previous.
+
 # Changelog
 
-## v17 — Master Template Cleanup
+## v23 Scripture Standby + Poll Scripture Takeover
+- `/scriptures` now stays on the title/series standby screen when the presentation starts.
+- Removed the automatic slide-0 scripture push on Start.
+- `/scriptures` now becomes a full-screen poll results display while a poll is active.
+- Next/Previous/poll close clears the poll takeover state.
 
-**Bug fix**
-- Restored `question_submit` and `q_unlock` message handling. These existed in the
-  original `handleMessage` but were dropped when the `v13` patch replaced
-  `window.handleMessage` without carrying them forward. Effect of the bug: live attendee
-  questions never reached the admin's Live Questions panel, and unlocking the
-  questionnaire from admin never reached attendees in real time (it only worked on page
-  reload, via `localStorage`). Both now work live again.
+## v17 Master Template Cleanup
 
-**Organization**
-- Added 9 labeled sections to `index.html`: SERIES CONFIG, THEME CONFIG, LESSON DATA,
-  SCRIPTURE DATA, APP STATE, ROUTING/INIT, UI/RENDERERS/CONTROLS, OBS+TEACHING SLIDE LOGIC,
-  CONFIDENCE MONITOR LOGIC. See README.md for the full section map and what each one is
-  safe to edit.
-- Added `SERIES_CONFIG` (title, subtitle, speaker, passwords, Supabase channel ID, QR URL)
-  as the single place to edit series identity for a future series.
-- Added `THEME` (colors + background image) and `applyTheme()`, wired into the existing
-  CSS variables (`--bg`, `--w`, `--red`, `--gold`, etc.) with identical default values —
-  zero visual change, but color/background is now a one-object edit instead of a CSS hunt.
-  Added `--bg-image` and `--green`/`--greend` CSS variables so the background photo and the
-  Start-button green are themeable the same way everything else already was.
+- Preserved the stable working presentation behavior.
+- Consolidated multiple CSS patch blocks into one ordered style block.
+- Consolidated multiple JavaScript patch blocks into one ordered script block.
+- Added clear editable config sections for series metadata, theme colors, passwords, and lesson data.
+- Added `THEME_CONFIG` and `applyThemeConfig()` so future series can change color schemes from one place.
+- Kept the app single-file for live stability and simple duplication.
+- Removed empty `index.html.tmp`.
+- Added README documentation for routes, editing workflow, ProPresenter, OBS, deployment, and testing.
 
-**Dead code removed** (each verified unreachable — overridden before first use, confirmed
-no caller resolves to it — see inline comments left in their place pointing to the live
-version)
-- Old `renderSlide` — pre-dated the fix that removed the large point-number badge from
-  teaching slides. Superseded by the `v13` patch version, which is what actually renders.
-- Old `slidePlainTitle`, `showOBS`, `showOBSSlide` — superseded by `v13` patch versions.
-- Old `handleMessage` — superseded by `v13`'s version (itself wrapped by `v16`).
-- Old `confidenceNextLabel`, `renderConfidenceScripture`, `updateConfidence`,
-  `updateConfidenceScripture`, `clearConfidenceScripture` — superseded by the `v16` patch
-  versions, which also implement "skip support scripture slides when previewing the next
-  teaching slide," something the old version never did.
-- Old `broadcastScripture`, `pushRawScripture` — superseded by `v16` versions (which add
-  `auto`/`manual` flags to the synced message, currently unused metadata).
+## Notes
 
-**Verified clean, no change needed**
-- No "Slide 1/15"-style indicators leaking into public outputs.
-- No misspellings of Previous / Confidence / Projector.
-- No stray debug labels.
+This cleanup intentionally does not add login, database editing, markdown loading, or a drag-and-drop lesson builder. Those should come later after the static live presentation system stays stable.
 
-## v16 — Confidence Monitor Cleanup (prior)
-- Confidence monitor: correct current/next slide, skip support scripture slides when
-  determining the next main slide, fit scripture text in the box, stop auto-scripture
-  pushes from hijacking the monitor.
+## v19 Emergency Sync Rollback
+- Rolled back the experimental v18 deck_state sync patch.
+- Restored the stable v17 slide/start behavior.
+- Kept master-template cleanup, README, and CHANGELOG structure.
+- No visual changes.
+- No feature changes.
 
-## v13 — Teaching/OBS Cleanup (prior)
-- Removed the point-number badge from teaching slides.
-- OBS full output: show scripture on scripture slides, show the clean main point
-  otherwise, stop every Auto-P2 verse push from hijacking it after a slide change.
+Use this version if v18 gets stuck after the Start slide.
 
-## v10–v12 (prior)
-- Cover/projector stability fixes, Start/mobile cleanup, standby/sync/mobile fixes,
-  mobile zoom lock.
+## v20 Mobile Haptics
+- Added mobile haptic feedback helper using `navigator.vibrate()` where supported.
+- Added haptic feedback to Mobile Mode Start, Previous, Next, Overlay, Clear, and verse push controls.
+- Preserved v19 stable sync behavior and did not change routes, visuals, or data structure.
+
+## v21 Mobile PWA Tap Feedback
+- Kept v19/v20 stable sync behavior unchanged.
+- Kept Android/web vibration support through `navigator.vibrate()`.
+- Added iOS/PWA-safe visual tap feedback for Mobile Mode controls.
+- Added button press compression, quick pulse, status glow, and slide/timer/title bump feedback.
+- Applied feedback to Start, Previous, Next, Overlay, X Verse, Clear, Close, and verse-bank buttons.
+- No route, visual output, projector, scripture, OBS, confidence, or data-structure changes.
+
+## v22 Polls + Scripture Output Adjustments
+- Set OBS lower thirds to green screen by default for chroma key workflows.
+- Changed the scripture side screen so Spanish RVR 1960 is the primary large text and KJV is the smaller supporting text.
+- Added a frontend live poll system using the existing sync channel.
+- Added premade poll bank and custom poll launcher in admin.
+- Added Poll button and poll launcher in Mobile Mode.
+- Added yes/no and multi-choice poll support.
+- Added anonymous answer saving on attendee devices through localStorage.
+- Added live poll result percentage overlay for projector/OBS outputs.
+- Poll overlays clear when the presenter advances slides.
+
+
+## v25 Audience Slave Mode + Poll Persistence Polish
+- Added audience slave mode so attendee screens follow the admin-controlled presentation while live.
+- Added top-right X to exit live slave mode and a Return to Session button on the user hub.
+- Added poll display inside the confidence monitor current-slide area.
+- Added mobile Poll live indicator and Kill Poll button.
+- Archived active polls and answers into local lesson storage when replaced, killed, closed, or cleared by slide navigation.
+- Added keyboard shortcut guard so editing a poll question/options does not advance slides.
+- Added optional SQL migration notes for future Supabase poll persistence.
+
+## v26 Audience Slave Mode Polish
+- Hid slideshow navigation controls while the audience user side is in slave/live-follow mode.
+- Kept a clear Exit Live control at the top right so users can leave slave mode.
+- Kept Return to Session available from the user hub when a live session is active.
+
+## v29 Confidence Restore + SQL Coverage
+- Restored confidence monitor slide formatting after poll state by clearing `poll-current` when normal slide/scripture rendering resumes.
+- Added full Supabase schema migration for attendees, responses, sync state, live questions, polls, and poll votes.
+- Added optional `/api/question-submit` endpoint for persistent live questions when Supabase env vars are configured.
+
+## v30 Live Data Admin Fix
+- Admin questions now fetch from Supabase through `/api/questions-list` instead of only local BroadcastChannel/localStorage.
+- Added `/questions` admin page for submitted questions with Answered/Hidden controls.
+- Added `/polls` admin page with live and answered poll archive.
+- Wired poll creation/archive to `/api/poll-save`.
+- Wired poll votes to `/api/poll-vote-submit`.
+- Added question update API for marking questions answered/hidden/new.
+- Expanded `supabase/schema.sql` with event-mode RLS policies and poll/question tables.
+
+## v31 Admin tabs + attendee check-in fix
+- Moved live questions into an admin tab next to Polls instead of relying on separate raw dashboard pages.
+- Added answered poll results directly inside the Polls admin tab.
+- Kept /questions and /polls routes as optional utility pages, but admin workflow now stays inside /admin.
+- Fixed attendee check-in saving by allowing name-only session access records in api/waitlist.js.
+- Added attendee source/series/lesson fields to Supabase schema and added api/attendees-list.js for checking saved attendees.
+
+## v33 Attendee Identity Patch
+- Required name + email + access code for audience entry.
+- Saved attendee session identity in Supabase.
+- Linked questions and poll votes to attendee/session identity.
+- Added safer poll duplicate handling by session/email hash.
+- Added Supabase patch `supabase/v33-attendee-identity-patch.sql`.
+
+
+## v34 Supabase Realtime Wiring Fix
+- Added `/api/config` so browser outputs can load `SUPABASE_URL` and `SUPABASE_ANON_KEY` from Vercel environment variables.
+- Restored local-first BroadcastChannel behavior so same-machine controls stay snappy.
+- Made Supabase sync fire-and-forget so phone taps do not wait on the network.
+- Added visible connection fallback labels for Local only / Live / Realtime error states.
+- Did not change projector visuals, confidence layout, poll UI, or routes.
+
+## v35 Admin live data display polish
+- Standardized question display names between the sidebar and Questions tab.
+- Added live poll results into the Polls tab, not only the right sidebar.
+- Kept answered poll archive inside the Polls tab.
+- No route, sync, projector, scripture, confidence, or audience behavior changes.
+
+## v36 Anonymous Default Off
+- Changed audience poll anonymous-save checkbox to be off by default.
+- No other behavior changed.
+
+
+
+## v37 Lesson 2 Added
+- Added Lesson 2: The Discipline of the Sent.
+- Kept Lesson 1 intact as the default lesson.
+- Lesson 2 is selectable with `?lesson=lesson-2` or the admin Lesson 2 button.
+- Added Lesson 2 slides, presenter notes, scripture mappings, verse bank, reflection questions, and poll bank.
+- No projector, sync, Supabase, audience, or admin data wiring changes.
+
+## v38 Default Route Lesson Selector
+- Kept Lesson 1 and Lesson 2 in the same app.
+- Admin lesson buttons now control the selected lesson for all permanent output routes.
+- `/projector`, `/scriptures`, `/confidence`, `/mobile`, `/obslowerthirds`, and `/obsslides` can stay unchanged during live setup.
+- Selecting a lesson resets outputs to standby, clears overlays/polls locally, rebuilds slides, verse bank, poll bank, and confidence data.
+- Query params like `?lesson=lesson-2` still work as a testing override.
+
+## v39 Default Route Lesson Sync Fix
+- Lesson selection now travels with slide and scripture commands.
+- Projector/scriptures/confidence can recover even if they missed the original lesson-select broadcast.
+- Selecting Lesson 1 or Lesson 2 still resets to standby, but the next Start/Next command forces every output onto the selected lesson.
+- No visual or Supabase schema changes.
